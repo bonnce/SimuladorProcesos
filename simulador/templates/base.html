@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  {% load static %}
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+  <title>Simulador C1G6 | {% block title%}{% endblock title%}</title>
+</head>
+
+<body> 
+    <!--Cabezera-->
+    <nav class="navbar navbar-expand-lg navbar-light navCustom" id="mainNav">
+        <a class="navbar-brand col-md-4" href="{% url 'memoria' %}">
+            <img src="{% static 'img/utnlogo.png'%}" height="80" alt="utn logo">
+        </a>
+        <h2 class="lead blue-grey-text pl-5 col-md-8"><strong>Simulador de Planificación de procesos - Grupo C1G6</strong></h2>   
+    </nav>
+    <!--Cabezera-->
+
+    <div class="container-fluid">
+
+        <!--Navbar-->
+        <ul class="nav cloudy-knoxville-gradient py-4 mb-md-0 mb-4 mt-3 font-weight-bold z-depth-1" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link text-black-50" id="memoria-tab" href="{% url 'memoria' %}">Configuracion de Memoria</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-black-50" id="procesos-tab" href="{% url 'procesos' %}">Carga de Procesos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-black-50" id="visualizacion-tab" href="{% url 'presentacion' %}">Presentacion</a>
+            </li>
+        </ul>
+        <!--Navbar-->
+
+        {% block content%}
+
+        {%endblock content%}
+
+        <!-- Footer -->
+        <footer class="page-footer font-small cloudy-knoxville-gradient text-black-50 lighten-2 pt-4 ">
+    
+        <!-- Footer Links -->
+        <div class="container-fluid text-center text-md-left">
+        
+            <!-- Grid row -->
+            <div class="row">
+        
+            <!-- Grid column -->
+            <div class="col-md-6 mt-md-0 mt-3">
+        
+                <!-- Content -->
+                <h5 class="text-uppercase">Simulador de planificacion de procesos</h5>
+                <p class="pt-3"><strong>Desarrollado para la catedra "Sistemas Operativos" del 3° año de la carrera</strong> </p> 
+                <p><strong> Ingeniería en Sistemas de la UTN-FRRE.</strong></p>
+        
+            </div>
+            <!-- Grid column -->
+        
+            <hr class="clearfix w-100 d-md-none pb-3">
+        
+            <!-- Grid column -->
+            <div class="col-md-3 mb-md-0 mb-3">
+        
+                <!-- Links -->
+                <h5 class="text-uppercase">Profesores</h5>
+        
+                <ul class="list-unstyled">
+                <li>
+                    <strong>Liliana Cuny Cuenta Pletsch</strong> 
+                </li>
+                <li>
+                    <strong>Sergio Gramajo</strong> 
+                </li>
+                <li>
+                    <strong>Alberto Ristoff</strong> 
+                </li>
+                <li>
+                    <strong>Jorge Roa</strong> 
+                </li>
+                </ul>
+        
+            </div>
+            <!-- Grid column -->
+        
+            <!-- Grid column -->
+            <div class="col-md-3 mb-md-0 mb-3">
+        
+                <!-- Links -->
+                <h5 class="text-uppercase">Alumnos</h5>
+        
+                <ul class="list-unstyled">
+                <li>
+                    <a class="text-black-50" href="https://www.linkedin.com/in/rodrigo-daniel-cerdan-/"> <strong>Cerdan Rodrigo</strong></a>
+                </li>
+                <li>
+                    <a class="text-black-50" href="#!"><strong>Duarte Elias</strong></a>
+                </li>
+                <li> 
+                    <a class="text-black-50" href="#!"><strong>Perez Carla</strong></a>
+                </li>
+                <li>
+                    <a class="text-black-50" href="https://ar.linkedin.com/in/sandinosanchez?trk=people-guest_profile-result-card_result-card_full-click"><strong>Sanchez Sandino</strong></a>
+                </li>
+                <li>
+                    <a class="text-black-50" href="#!"><strong>Silva Otto</strong></a>
+                </li>
+                </ul>
+        
+            </div>
+            <!-- Grid column -->
+        
+            </div>
+            <!-- Grid row -->
+        
+        </div>
+        <!-- Footer Links -->
+        
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3 grey lighten-1">© 2019 Copyright:
+            <a href="http://www.frre.utn.edu.ar"> UTN-FRRE</a>
+        </div>
+        <!-- Copyright -->
+        
+        </footer>
+        <!-- Footer -->
+    </div>
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+</body>
+
+</html>
