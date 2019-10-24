@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
+from django.http import HttpResponse
+import json
 
 class HomePageView(TemplateView):
 
@@ -12,7 +14,11 @@ class MemoriaView(TemplateView):
 class ProcessView(TemplateView):
     
     template_name = "procesos.html"
-
+ 
 class PresentationView(TemplateView):
     
     template_name = "presentacion.html"
+
+def foo(request):
+	if request.is_ajax():
+		return HttpResponse(json.dumps({'foo':'luca puto '}), content_type="application/json")

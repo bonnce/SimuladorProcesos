@@ -125,5 +125,20 @@
 
         </div>
 
+        <div id="ls">
+          <button onClick="setInterval(foo, 2000)";> click</button>
+        </div>
+
+        <script type="text/javascript">
+          function foo(){
+            $.ajax({
+              url:"{% url 'foo' %}",
+              success: function(data){
+                $('#ls').append(data["foo"]);
+              }
+            });
+          }
+        </script>
+
             
 {% endblock content %}
