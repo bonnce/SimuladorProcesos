@@ -1,0 +1,7 @@
+$("#Table").append(  
+                '<tr>' + 
+                '<td>' + datos[i].id + '</td>'+
+                '<td>' + datos[i].nombre + '</td>'+
+                '<td>' + datos[i].email + '</td>'+
+                '<td>' + datos[i].estado + '</td>'+
+                '</tr>');

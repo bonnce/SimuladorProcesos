@@ -14,7 +14,7 @@
     <!-- Material Design Bootstrap -->
     <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
     <!-- Your custom styles (optional) -->
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/simulador.css' %}" rel="stylesheet">
     <!-- Firestore -->
     <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
@@ -37,109 +37,115 @@
         <!--Navbar-->
         <ul class="nav cloudy-knoxville-gradient py-4 mb-md-0 mb-4 mt-3 font-weight-bold z-depth-1" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link text-black-50" id="memoria-tab" href="{% url 'memoria' %}">Configuracion de Memoria</a>
+                <a class="nav-link active" id="memoria-tab" href="{% url 'memoria' %}" role="tab" aria-controls="memoria" aria-selected="true">Configuracion de Memoria</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-black-50" id="procesos-tab" href="{% url 'procesos' %}">Carga de Procesos</a>
+                <a class="nav-link" id="procesos-tab" href="{% url 'procesos' %}" role="tab" aria-controls="procesos" aria-selected="false" href="{% url 'procesos' %}">Carga de Procesos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-black-50" id="visualizacion-tab" href="{% url 'presentacion' %}">Presentacion</a>
+                <a class="nav-link" id="visualizacion-tab" href="{% url 'presentacion' %}" role="tab" aria-controls="visualizacion" aria-selected="false" href="{% url 'presentacion' %}">Presentación</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link text-black-50" href ="{% url 'memoria' %}">Reiniciar Configuración
+                    <span class="sr-only">(current)</span>
+                </a>
             </li>
         </ul>
+
         <!--Navbar-->
 
-        {% block content%}
+        {% block content %}
 
-        {%endblock content%}
+        {% endblock content %}
 
-        <!-- Footer -->
-        <footer class="page-footer font-small cloudy-knoxville-gradient text-black-50 lighten-2 pt-4 ">
-    
-        <!-- Footer Links -->
-        <div class="container-fluid text-center text-md-left">
-        
-            <!-- Grid row -->
-            <div class="row">
-        
-            <!-- Grid column -->
-            <div class="col-md-6 mt-md-0 mt-3">
-        
-                <!-- Content -->
-                <h5 class="text-uppercase">Simulador de planificacion de procesos</h5>
-                <p class="pt-3"><strong>Desarrollado para la catedra "Sistemas Operativos" del 3° año de la carrera</strong> </p> 
-                <p><strong> Ingeniería en Sistemas de la UTN-FRRE.</strong></p>
-        
-            </div>
-            <!-- Grid column -->
-        
-            <hr class="clearfix w-100 d-md-none pb-3">
-        
-            <!-- Grid column -->
-            <div class="col-md-3 mb-md-0 mb-3">
-        
-                <!-- Links -->
-                <h5 class="text-uppercase">Profesores</h5>
-        
-                <ul class="list-unstyled">
-                <li>
-                    <strong>Liliana Cuny Cuenta Pletsch</strong> 
-                </li>
-                <li>
-                    <strong>Sergio Gramajo</strong> 
-                </li>
-                <li>
-                    <strong>Alberto Ristoff</strong> 
-                </li>
-                <li>
-                    <strong>Jorge Roa</strong> 
-                </li>
-                </ul>
-        
-            </div>
-            <!-- Grid column -->
-        
-            <!-- Grid column -->
-            <div class="col-md-3 mb-md-0 mb-3">
-        
-                <!-- Links -->
-                <h5 class="text-uppercase">Alumnos</h5>
-        
-                <ul class="list-unstyled">
-                <li>
-                    <a class="text-black-50" href="https://www.linkedin.com/in/rodrigo-daniel-cerdan-/"> <strong>Cerdan Rodrigo</strong></a>
-                </li>
-                <li>
-                    <a class="text-black-50" href="#!"><strong>Duarte Elias</strong></a>
-                </li>
-                <li> 
-                    <a class="text-black-50" href="#!"><strong>Perez Carla</strong></a>
-                </li>
-                <li>
-                    <a class="text-black-50" href="https://ar.linkedin.com/in/sandinosanchez?trk=people-guest_profile-result-card_result-card_full-click"><strong>Sanchez Sandino</strong></a>
-                </li>
-                <li>
-                    <a class="text-black-50" href="#!"><strong>Silva Otto</strong></a>
-                </li>
-                </ul>
-        
-            </div>
-            <!-- Grid column -->
-        
-            </div>
-            <!-- Grid row -->
-        
-        </div>
-        <!-- Footer Links -->
-        
-        <!-- Copyright -->
-        <div class="footer-copyright text-center py-3 grey lighten-1">© 2019 Copyright:
-            <a href="http://www.frre.utn.edu.ar"> UTN-FRRE</a>
-        </div>
-        <!-- Copyright -->
-        
-        </footer>
-        <!-- Footer -->
     </div>
+    <!-- Footer -->
+    <footer class="page-footer font-small cloudy-knoxville-gradient text-black-50 lighten-2 pt-4 w-100">
+
+    <!-- Footer Links -->
+    <div class="container-fluid text-center text-md-left">
+    
+        <!-- Grid row -->
+        <div class="row">
+    
+        <!-- Grid column -->
+        <div class="col-md-6 mt-md-0 mt-3">
+    
+            <!-- Content -->
+            <h5 class="text-uppercase">Simulador de planificacion de procesos</h5>
+            <p class="pt-3"><strong>Desarrollado para la catedra "Sistemas Operativos" del 3° año de la carrera</strong> </p> 
+            <p><strong> Ingeniería en Sistemas de la UTN-FRRE.</strong></p>
+    
+        </div>
+        <!-- Grid column -->
+    
+        <hr class="clearfix w-100 d-md-none pb-3">
+    
+        <!-- Grid column -->
+        <div class="col-md-3 mb-md-0 mb-3">
+    
+            <!-- Links -->
+            <h5 class="text-uppercase">Profesores</h5>
+    
+            <ul class="list-unstyled">
+            <li>
+                <strong>Liliana Cuny Cuenta Pletsch</strong> 
+            </li>
+            <li>
+                <strong>Sergio Gramajo</strong> 
+            </li>
+            <li>
+                <strong>Alberto Ristoff</strong> 
+            </li>
+            <li>
+                <strong>Jorge Roa</strong> 
+            </li>
+            </ul>
+    
+        </div>
+        <!-- Grid column -->
+    
+        <!-- Grid column -->
+        <div class="col-md-3 mb-md-0 mb-3">
+    
+            <!-- Links -->
+            <h5 class="text-uppercase">Alumnos</h5>
+    
+            <ul class="list-unstyled">
+            <li>
+                <a class="text-black-50" href="https://www.linkedin.com/in/rodrigo-daniel-cerdan-/"> <strong>Cerdan Rodrigo</strong></a>
+            </li>
+            <li>
+                <a class="text-black-50" href="#!"><strong>Duarte Elias</strong></a>
+            </li>
+            <li> 
+                <a class="text-black-50" href="#!"><strong>Perez Carla</strong></a>
+            </li>
+            <li>
+                <a class="text-black-50" href="https://ar.linkedin.com/in/sandinosanchez?trk=people-guest_profile-result-card_result-card_full-click"><strong>Sanchez Sandino</strong></a>
+            </li>
+            <li>
+                <a class="text-black-50" href="#!"><strong>Silva Otto</strong></a>
+            </li>
+            </ul>
+    
+        </div>
+        <!-- Grid column -->
+    
+        </div>
+        <!-- Grid row -->
+    
+    </div>
+    <!-- Footer Links -->
+    
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3 grey lighten-1">© 2019 Copyright:
+        <a href="http://www.frre.utn.edu.ar"> UTN-FRRE</a>
+    </div>
+    <!-- Copyright -->
+    
+    </footer>
+    <!-- Footer -->
 
   <!-- SCRIPTS -->
   <!-- JQuery -->
@@ -150,7 +156,14 @@
   <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+
   <!--Funciones Javascript-->
+  <!-- <script src="{% static 'js/simulador/base.js' %}"></script>
+  <script src="{% static 'js/simulador/memoria.js' %}"></script>
+  <script src="{% static 'js/simulador/procesos.js' %}"></script>
+  <script src="{% static 'js/simulador/presentacion.js' %}"></script> -->
+  <script src="{% static 'js/test/test.js' %}"></script>
+
   <script src="{% static 'js/simulador.js' %}"></script>
 </body>
 
