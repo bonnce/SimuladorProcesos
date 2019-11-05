@@ -3,9 +3,17 @@ from django.views.generic.base import TemplateView
 from django.http import HttpResponse
 import json
 
-class HomePageView(TemplateView):
+class SimulatorView(TemplateView):
 
     template_name = "base.html"
+
+class HomePageView(TemplateView):
+    
+    template_name = "inicio.html"
+
+class ConfigView(TemplateView):
+    
+    template_name = "configuracion.html"
 
 class MemoriaView(TemplateView):
     
