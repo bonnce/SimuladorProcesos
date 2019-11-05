@@ -5,6 +5,23 @@
 {% block title %}Presentacion{% endblock title %}
 
 {% block content %}
+<!--Grid row-->
+<div class="container-fluid">
+    <ul class="nav cloudy-knoxville-gradient py-3 mb-md-0 mb-4 mt-3 font-weight-bold z-depth-1 d-flex justify-content-around" id="myTab" role="tablist">
+        <li class="nav-item active">
+            <a class="nav-link text-black-50" href ="{% url 'config' %}">Reiniciar Configuración
+                <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link text-black-50" id="procesos-tab" href="{% url 'config' %}" role="tab" aria-controls="procesos" aria-selected="false">Carga de Trabajo</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-black-50" id="visualizacion-tab" href="{% url 'presentacion' %}" role="tab" aria-controls="visualizacion" aria-selected="false">Presentación</a>
+        </li>
+    </ul>
+</div>
 
 <div class="tab-pane" id="visualizacion" role="tabpanel" aria-labelledby="contact-tab">
 

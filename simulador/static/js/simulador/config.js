@@ -89,7 +89,16 @@ $("#optionTam").change(function(){
 
  });
   //--------------------------------------------------------------------------
-
+  $("#optionAlgo").change(function(){
+   var rr = $("#optionAlgo").find(':selected').text();
+   if (rr == 'Round Robin'){
+    $('.alertRR').removeClass('hide');
+    $('.alertRR').addClass('show');
+   } else{
+    $('.alertRR').removeClass('show');
+    $('.alertRR').addClass('hide');
+   }
+});
  //Generacion de particiones
  
  $(".inputMemory").keyup(function(){
