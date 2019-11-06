@@ -105,7 +105,7 @@ $("#optionTam").change(function(){
  //Generacion de particiones
 //--------------------------------
  //agregar particiones
- $(".optionPart").change(function(){
+ $(".optionPart").off().change(function(){
   var partition = $("#optionPart").find(':selected').text();
   var cantidad = parseInt(partition); console.log(cantidad)
   $('#rowspan').append($('<span class="mt-5 lead">Ingrese el tamaño de las particiones</span>'));
@@ -123,6 +123,7 @@ $("#optionTam").change(function(){
           console.log(cantidad)
         }
   }
+  return i;
    
 });
 

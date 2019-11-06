@@ -17,7 +17,7 @@ function traer() {
             //console.log(this.responseText)
             var datos = JSON.parse(this.responseText);
             //console.log(datos);
-            var res = document.querySelector('#content-test')
+            var res = document.querySelector('#tableId')
             res.innerHTML = ''
 
             for ( var item of datos){
