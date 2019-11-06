@@ -1,8 +1,12 @@
 .card{
     width: 500px;
+    border: none;
+}
+
+.card-header{
+    border: none;
 }
 
 #btn-parts{
     width: 148px
 }
-

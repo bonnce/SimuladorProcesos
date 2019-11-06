@@ -2,6 +2,10 @@
 
 {% load static %}
 
+{% block styleLink %}
+  <link href="{% static 'css/simulador/presentacion.css' %}" rel="stylesheet"> 
+{% endblock styleLink %}
+
 {% block title %}Presentacion{% endblock title %}
 
 {% block content %}
@@ -60,7 +64,7 @@
   <h3>Diagrama de CPU</h3>
   <div class="progress" id="progressCpu">
     <div class="progress-bar one" id="proccessBar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-      <a tabindex="0" class="btn btn-lg btn-info" role="button" data-placement="top" data-toggle="popover" data-trigger="focus" title="Pulse Empezar" data-content="No hay informacion disponible">Presione Empezar</a>
+      <a tabindex="0" class="btn btn-lg btn-info py-2" role="button" data-placement="top" data-toggle="popover" data-trigger="focus" title="Pulse Empezar" data-content="No hay informacion disponible">Presione Empezar</a>
     </div>
   </div>
 </div>
@@ -69,7 +73,7 @@
   <h3>Diagrama de E/S</h3>
   <div class="progress" id="progressEs">
     <div class="progress-bar one" id="proccessEs" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-      <a tabindex="0" class="btn btn-lg btn-info" role="button" data-placement="top" data-toggle="popover" data-trigger="focus" title="Pulse Empezar" data-content="No hay informacion disponible">Presione Empezar</a>
+      <a tabindex="0" class="btn btn-lg btn-info py-2" role="button" data-placement="top" data-toggle="popover" data-trigger="focus" title="Pulse Empezar" data-content="No hay informacion disponible">Presione Empezar</a>
     </div>
   </div>
 </div>
@@ -78,7 +82,7 @@
 
   <div class="col-lg-6">
 
-    <h5>Tiempos de Retorno</h5>
+    <h5 class="ml-3">Tiempos de Retorno</h5>
 
     <table class="table tableResponse">
       <thead>

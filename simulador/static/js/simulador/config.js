@@ -36,6 +36,8 @@ $("#optionTam").change(function(){
     }
 
 });
+
+
  //--------------------------------
  //control del tipo de memoria
  $("#optionType").change(function(){
@@ -88,6 +90,7 @@ $("#optionTam").change(function(){
    }
 
  });
+
   //--------------------------------------------------------------------------
   $("#optionAlgo").change(function(){
    var rr = $("#optionAlgo").find(':selected').text();
@@ -100,7 +103,30 @@ $("#optionTam").change(function(){
    }
 });
  //Generacion de particiones
- 
+//--------------------------------
+ //agregar particiones
+ $(".optionPart").change(function(){
+  var partition = $("#optionPart").find(':selected').text();
+  var cantidad = parseInt(partition); console.log(cantidad)
+  $('#rowspan').append($('<span class="mt-5 lead">Ingrese el tamaño de las particiones</span>'));
+
+  if (partition == '1') { 
+    $('#partinput').append($('<input type="email" id="materialContactFormEmail" class="form-control py-3 mb-2 mt-1" placeholder="Partición 1">'));
+    $('#partbtn1').append($('<button class="btn btn-outline-info z-depth-0 waves-effect py-2" type="submit">Agregar</button>'));
+    $('#partbtn2').append($('<button class="btn btn-outline-danger z-depth-0 waves-effect py-2" type="submit" id="qbtn1">Quitar</button>'));
+
+  } else {
+        for (var i = 1; i <= cantidad ; i++) {  
+          $('#partinput').append($('<input type="email" id="materialContactFormEmail" class="form-control py-3 mb-2 mt-1" placeholder="Partición '+i+'">'));
+          $('#partbtn1').append($('<button class="btn btn-outline-info z-depth-0 waves-effect btn-sm py-2 mb-1" type="submit">Agregar</button>'));
+          $('#partbtn2').append($('<button class="btn btn-outline-danger z-depth-0 waves-effect btn-sm py-2 mb-1" type="submit" id="qbtn'+i+'">Quitar</button>'));
+          console.log(cantidad)
+        }
+  }
+   
+});
+
+//--------------------------------------------------------------------------
  $(".inputMemory").keyup(function(){
    $('.alertPart').removeClass('show');
    $('.alertPart').addClass('hide');
