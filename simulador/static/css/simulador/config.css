@@ -1,0 +1,16 @@
+.card{
+    width: 500px;
+    border: none;
+}
+
+.card-header{
+    border: none;
+}
+
+#btn-parts{
+    width: 148px
+}
+
+#inputGroup-sizing-default{
+    height:40px
+}

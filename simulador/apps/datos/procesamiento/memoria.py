@@ -13,6 +13,7 @@ class Memoria(ABC):
 
 	@abstractmethod
 	def particion_libre(self, proceso):
+        pass
 
 
 	def agregar_proceso(self, proceso):
@@ -90,6 +91,4 @@ class MemoriaHandler():
 		if espacio_libre: 
 			self.agregar_proceso(proceso)
 
-	def quitar_proceso(self, proceso):
-		self.memoria.particiones.remove(proceso)
-		
+
