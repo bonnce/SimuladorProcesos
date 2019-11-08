@@ -37,7 +37,7 @@
                     <h5 class="card-header info-color white-text text-center py-4 mb-4">
                         <strong>Asignación de Memoria</strong>
                     </h5>     
-                    <form method="GET">
+                    <form method="POST" action="{% url 'datos:print' %}">
                         <div class="card-body px-lg-5 pt-0 memorySelect">
                             <span class="mt-5 lead">Tamaño de la Memoria</span>
                             <select class="browser-default custom-select mb-4 mt-3" id="optionTam">
