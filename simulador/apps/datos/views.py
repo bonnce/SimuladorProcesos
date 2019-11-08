@@ -7,9 +7,19 @@ import json
 
 def preparacion(request):
 	if request.method == 'POST':
-		alg_planif = request.POST['alg_planif']
-		alg_memoria = request.POST['alg_memoria']
+		tam_memoria = request.POST.get('tam_memoria')
+		tipo_memoria = request.POST.get('tipo_memoria')
+		algoritmo_memoria = request.POST.get('algoritmo_memoria')
+		algoritmo_planif= request.POST.get('algoritmo_planif')
 		
+		context = {}
+
+		context['tam_memoria'] = tam_memoria
+		context['tipo_memoria'] = tipo_memoria
+		context['algoritmo_memoria'] = algoritmo_memoria
+		context['algoritmo_planif'] = algoritmo_planif
+
+		return render(request, 'presentacion.html', context)
 
 
 

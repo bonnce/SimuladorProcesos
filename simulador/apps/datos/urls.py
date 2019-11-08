@@ -6,6 +6,7 @@ urlpatterns = [
 
 	path('', views.PresentationView.as_view(), name="presentacion"),
 	path('ajax/', views.foo, name='foo'),
+	path('print/', views.preparacion, name="print"),
 
 
 ]
