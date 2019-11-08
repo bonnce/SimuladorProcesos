@@ -88,7 +88,7 @@ class MemoriaHandler():
 
 	def add_prcoeso(self, proceso):
 		espacio_libre = self.particion_libre(proceso)
-		if espacio_libre: 
+		if espacio_libre: 	
 			self.agregar_proceso(proceso)
 
 
