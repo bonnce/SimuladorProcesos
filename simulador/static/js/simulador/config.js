@@ -18,9 +18,9 @@ var tiempo = 0
 var lenArrayProcess = 0
 //Preparamos el entorno de trabajo
 
-$('document').ready(function(){
+$(document).ready(function(){
 
-  $("#Memoryinput").keydown(function(event) {
+  $("#Memoryinput, .alertRR, .sizeInput, .arrivalInput, .inputcpu, .inputes, .lastCpu").keydown(function(event) {
 
   //No permite mas de 11 caracteres Numéricos
   if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39) 
@@ -134,19 +134,6 @@ return sizeMemory, maxpart;
 
  });
 
-  $("#optionAlgo").change(function(){
-   var rr = $("#optionAlgo").find(':selected').text();
-   if (rr == 'Round Robin'){
-    $('.alertRR').removeClass('hide');
-    $('.alertRR').addClass('show');
-   } else{
-    $('.alertRR').removeClass('show');
-    $('.alertRR').addClass('hide');
-    $(".alertRR").addClass("disabled");
-   }
-});
-//control de la seleccion de algoritmo
-
 //--------------------------------------------------------------------------
 //Generacion de particiones
 //agregar particion - control de input 
@@ -194,10 +181,8 @@ $('#formid').off().on('click', '.btn-add',function(e){
 
   //Tamaño de particion ingresada
   var sizepart = currentEntry.find('input').val();
-  console.log(sizepart);
-
   sizepart = parseInt(sizepart);
-  console.log(sizepart);
+
   if (sizepart > 0) {
 
     if (sizepart > tamdisp) {
@@ -291,14 +276,13 @@ $(document).on('click','.btn-remove', function(){
       .removeClass('btn-remove').addClass('btn-udp')
       .removeClass('btn-outline-danger').addClass('btn-outline-info')
       .html('<span class="glyphicon glyphicon-plus">Agregar</span>');
-      
+
     $(".textoAlertPart").text("Particion Eliminada Correctamente.");
     $('.alertPart').removeClass('alert-danger');
     $('.alertPart').addClass('alert-success');
     $('.alertPart').addClass('show');
     
 });
-
 
 function setPart(sizePart){
   for (var i = 0; i < memFija.length; i++) {
@@ -337,41 +321,60 @@ console.log('luego de haber borrado la particion')
   }
   });
 
-
-//control de ajuste de memoria
 //--------------------------------------------------------------------------
+//CONTROL DE AJUSTE DE MEMORIA
+
 //control de la seleccion de algoritmo
- /*   $(".optionPlaningOne").click(function(){
+$("#optionAlgo").change(function(){
+  var typeAlgorithm = $("#optionAlgo").find(':selected').text();
+
+  if (typeAlgorithm == 'FCFS'){
     var valueCurrent = $(".optionPlaningOne > input").val();
     algorithm = valueCurrent;
     console.log(algorithm);
     $(".quantumIn").val("");
     $(".quantumIn").hide();
     $(".algoInfo").text("FCFS");
- });
- $(".optionPlaningTwo").click(function(){
-    var valueCurrent = $(".optionPlaningTwo > input").val();
-    algorithm = valueCurrent;
-    console.log(algorithm);
-    $(".quantumIn").show();
-    $(".algoInfo").text("RR");
- });
- $(".optionPlaningThree").click(function(){
-    var valueCurrent = $(".optionPlaningThree > input").val();
-    algorithm = valueCurrent;
-    console.log(algorithm);
-    $(".quantumIn").val("");
-    $(".quantumIn").hide();
-    $(".algoInfo").text("SJF");
- });
- $(".optionPlaningFour").click(function(){
-    var valueCurrent = $(".optionPlaningFour > input").val();
-    algorithm = valueCurrent;
-    console.log(algorithm);
-    $(".quantumIn").hide();
-    $(".algoInfo").text("SRTF");
- }); */
+ 
+  } else if (typeAlgorithm == 'Round Robin'){
+      var valueCurrent = $(".optionPlaningTwo > input").val();
+      algorithm = valueCurrent;
+      console.log(algorithm);
+      $(".quantumIn").show();
+      $(".algoInfo").text("RR");
 
+  } else if (typeAlgorithm == 'Prioridades'){
+      var valueCurrent = $(".optionPlaningThree > input").val();
+      algorithm = valueCurrent;
+      console.log(algorithm);
+      $(".quantumIn").val("");
+      $(".quantumIn").hide();
+      $(".algoInfo").text("Prioridades");
+
+  } else {
+      var valueCurrent = $(".optionPlaningFour > input").val();
+      algorithm = valueCurrent;
+      console.log(algorithm);
+      $(".quantumIn").hide();
+      $(".algoInfo").text("Multinivel sin Retro");
+
+  }
+
+  if (typeAlgorithm == 'Round Robin'){
+   $('.alertRR').removeClass('hide');
+   $('.alertRR').addClass('show');
+  } else{
+   $('.alertRR').removeClass('show');
+   $('.alertRR').addClass('hide');
+   $(".alertRR").addClass("disabled");
+  }
+});
+//control de la seleccion de algoritmo
+
+//Formulario
+//Editar Nombre
+$(document).on('click','.editarNombre',function(){
+  $('.nomProc').prop("disabled", false)});
 
  //------------------------------------
  /* console.log('activo')

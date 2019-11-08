@@ -55,3 +55,14 @@
         </button>
 </div> */
 
+$("#optionAlgo").change(function(){
+  var rr = $("#optionAlgo").find(':selected').text();
+  if (rr == 'Round Robin'){
+   $('.alertRR').removeClass('hide');
+   $('.alertRR').addClass('show');
+  } else{
+   $('.alertRR').removeClass('show');
+   $('.alertRR').addClass('hide');
+   $(".alertRR").addClass("disabled");
+  }
+});
