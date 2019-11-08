@@ -50,7 +50,7 @@ class MemoriaVariable(Memoria):
 	def __init__(self):
 		super().__init__()
 
-	def particion_libre(self):
+	def particion_libre(self, proceso):
 		frag_interna_global = 0
 		frag_interna_local = 0
 		index = None
@@ -74,7 +74,7 @@ class MemoriaVariable(Memoria):
 
 class MemoriaHandler():
 	def __init__(self):
-		self.memoria = Memoria()
+		self.memoria = memoria
 		self.cola_memoria = []
 
 	def encolar_proceso(self, proceso):
@@ -82,13 +82,14 @@ class MemoriaHandler():
 
 	def add_proceso_ff(self, proceso):
 		espacio_libre = self.particion_libre_ff(proceso)
-		if espacio_libre:
+		if espacio_libre: 
 			self.agregar_proceso(proceso)
 
 	def add_prcoeso(self, proceso):
 		espacio_libre = self.particion_libre(proceso)
-		if espacio_libre:
+		if espacio_libre: 
 			self.agregar_proceso(proceso)
 
-	def quitar_proceso(self):
+	def quitar_proceso(self, proceso):
+		self.memoria.particiones.remove(proceso)
 		

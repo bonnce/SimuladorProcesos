@@ -1,17 +1,32 @@
-from . memoria import MemoriaHandler
+from abc import ABC
 
 class Dispatcher(ABC):
-	def __init__(self):
-		self.cola_listos = []
-		self.cola_bloqueados = []
-		self.memoria_handler = MemoriaHandler()
+	def __init__(self, cola_listos, cola_bloqueados, memoria_handler):
+		self.cola_listos = cola_listos
+		self.cola_bloqueados = cola_bloqueados
+		self.memoria_handler = memoria_handler
 		self.clock = 0
+		self.proceso_ejecucion = None
 
 	@abstractmethod
 	def ordenar_clistos(self):
+		pass
+
+	@abstractmethod
+	def ejecutar_ciclo(self):
+		pass
 
 	def cargar_clistos(self, proceso):
-		self.cola_listos.append(proceso)
+		pass
+
+	def get_proceso_ejecucion(self):
+		return self.proceso_ejecucion
+
+	def get_tiempo_espera(self):
+
+
+	def cambio_contexto(self):
+
 
 
 
@@ -28,6 +43,9 @@ class SimuladorFCFS(Dispatcher):
 
 	def ordenar_clistos(self):
 		pass
+
+	def ejecutar_ciclo(self):
+
 
 class SimuladorPRIO(Dispatcher):
 	def __init__(self):
