@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 class Dispatcher(ABC):
-	def __init__(self, cola_listos, cola_bloqueados, memoria_handler):
+	def __init__(self, cola_listos=None, cola_bloqueados=None, memoria_handler=None):
 		self.cola_listos = cola_listos
 		self.cola_bloqueados = cola_bloqueados
 		self.memoria_handler = memoria_handler

@@ -1,4 +1,4 @@
-
+from abc import ABC, abstractmethod
 
 class Memoria(ABC):
 	def __init__(self, particiones):
@@ -13,7 +13,7 @@ class Memoria(ABC):
 
 	@abstractmethod
 	def particion_libre(self, proceso):
-        pass
+		pass
 
 
 	def agregar_proceso(self, proceso):
@@ -32,7 +32,7 @@ class MemoriaFija(Memoria):
 		fra_interna_local = 0
 		index = None
 		for particion in self.particiones:
-			if particion.proceso == None && proceso.tam <= particion.tam:
+			if particion.proceso == None and proceso.tam <= particion.tam:
 				frag_interna_local = particion.frag_interna()
 				if frag_interna_local < frag_interna_global:
 					frag_interna_global = frag_interna_local
@@ -56,7 +56,7 @@ class MemoriaVariable(Memoria):
 		frag_interna_local = 0
 		index = None
 		for particion in self.particiones:
-			if particion.proceso == None && proceso.tam <= particion.tam:
+			if particion.proceso == None and proceso.tam <= particion.tam:
 				frag_interna_local = particion.frag_interna()
 				if rag_interna_local > frag_interna_global:
 					frag_interna_global = frag_interna_local
@@ -74,7 +74,7 @@ class MemoriaVariable(Memoria):
 
 
 class MemoriaHandler():
-	def __init__(self):
+	def __init__(self, memoria):
 		self.memoria = memoria
 		self.cola_memoria = []
 
