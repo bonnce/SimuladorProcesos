@@ -500,10 +500,7 @@ $(document).on('click', ".one", function (e) {
     });
 });
 
-
-
-//var part = { "partid":1, "size":0}
-//inputs para crear las particiones
+//inputs para crear las partbtn-addiciones
 $(document).on('click', '.btn-add', function(e){
     $('.alertPart').removeClass('show');
     $('.alertPart').addClass('hide');

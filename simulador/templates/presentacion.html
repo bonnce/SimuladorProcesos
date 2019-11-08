@@ -37,16 +37,24 @@
       <div class="card-body ">
         <div class="row">
           <div class="col-lg-3">
-            <button type="button" class="btn btn-info" disabled>Memoria</button><button type="button" class="btn btn-outline-info memInfo">Variable</button>
+            <a href="{% url 'config' %}">
+              <button type="button" class="btn btn-info" disabled>Memoria</button><button type="button" class="btn btn-outline-info memInfo">Variable</button>
+            </a>
           </div>
           <div class="col-lg-3">
-            <button id ="tam" type="button" class="btn btn-info" disabled>Tamaño</button><button type="button" class="btn btn-outline-info tamInfo">256</button>
+            <a href="{% url 'config' %}">  
+              <button id ="tam" type="button" class="btn btn-info" disabled>Tamaño</button><button type="button" class="btn btn-outline-info tamInfo">256</button>
+            </a>
           </div>
           <div class="col-lg-3">
-            <button type="button" class="btn btn-info" disabled>Ajuste</button><button type="button" class="btn btn-outline-info ajuInfo">First Fit</button>
+            <a href="{% url 'config' %}">  
+              <button type="button" class="btn btn-info" disabled>Ajuste</button><button type="button" class="btn btn-outline-info ajuInfo">First Fit</button>
+            </a>
           </div>
           <div class="col-lg-3">
-            <button type="button" class="btn btn-info" disabled>Algortimo</button><button type="button" class="btn btn-outline-info algoInfo">FCFS</button>
+            <a href="{% url 'config' %}">  
+              <button type="button" class="btn btn-info" disabled>Algortimo</button><button type="button" class="btn btn-outline-info algoInfo">FCFS</button>
+            </a>
           </div>
         </div>
 

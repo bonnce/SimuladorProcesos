@@ -1,8 +1,51 @@
 
 console.log('activo')
-//control de la obtención del tamaño de la memoria
+//Ambiente de variables
+var sizeMemory = 256; // Tamaño de memoria
+var typeMemory = "Variable"; // tipo de Memoria
+var fitMemory = "First Fit"; //Ajuste de memoria
+var algorithm = "FCFS"; //Algoritmo de Planificacion
+var generalQuantum = 0; // Quantum para roundRobin
+var arrayProcess = []; //Arreglo con los procesos importados de la BD
+var arrayProcGraf = [];
+var procesosTerminados = []; // cola de procesos Terminado
+var particiones = []; // Memoria variable
+var colaListo = []; //Cola de procesos Listos
+var cont = 0;//contador de Particiones fijas
+var maxpart = 5; //cantidad maxima de particiones fijas
+var memFija = []; // memoria fija
+var tiempo = 0
+var lenArrayProcess = 0
+//Preparamos el entorno de trabajo
 
-$("#optionTam").change(function(){
+$('document').ready(function(){
+
+  $("#Memoryinput").keydown(function(event) {
+
+  //No permite mas de 11 caracteres Numéricos
+  if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39) 
+      if($(this).val().length >= 11)
+          event.preventDefault();
+  // Solo Numeros del 0 a 9 
+  if (event.keyCode < 48 || event.keyCode > 57)
+      //Solo Teclado Numerico 0 a 9
+      if (event.keyCode < 96 || event.keyCode > 105)
+          /*  
+              No permite ingresar pulsaciones a menos que sean los siguietes
+              KeyCode Permitidos
+              keycode 8 Retroceso
+              keycode 37 Flecha Derecha
+              keycode 39  Flecha Izquierda
+              keycode 46 Suprimir
+          */
+          if(event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39)
+              event.preventDefault();
+  });
+});     
+//Preparamos el entorno de trabajo
+//------------------------------------------------------------------------
+//control de la obtención del tamaño de la memoria
+$("#optionTam").off().change(function(){
     // Capturamos el valor seleccionado del desplegable
   var value = parseInt($("#optionTam").find(':selected').val());
 
@@ -11,7 +54,7 @@ $("#optionTam").change(function(){
         $(".tamInfo").text("256");
         maxpart = 5;
         $(".textoAlertMem").text("5 es la cantidad maxima de particiones para el tamaño de memoria elegida.");
-        console.log(sizeMemory);
+        //console.log(sizeMemory);
 
     } else if (value == 512){
         sizeMemory = value;
@@ -21,9 +64,8 @@ $("#optionTam").change(function(){
         for (var i=6; i<9; ++i) {
          $('#optionPart').append($('<option value='+i+'>'+i+'</option>'));
          }  
-        console.log(sizeMemory);
+        //console.log(sizeMemory);
         
-
     } else {
         sizeMemory = value;
         $(".tamInfo").text("1024");
@@ -32,14 +74,15 @@ $("#optionTam").change(function(){
         for (var i=6; i<=12; ++i) {
          $('#optionPart').append($('<option value='+i+'>'+i+'</option>'));
          }  
-        console.log(sizeMemory);
+        //console.log(sizeMemory);
     }
-
+console.log(sizeMemory,maxpart);
+return sizeMemory, maxpart;
+;
 });
-
-
- //--------------------------------
- //control del tipo de memoria
+//control de la obtención del tamaño de la memoria
+//--------------------------------
+//control del tipo de memoria
  $("#optionType").change(function(){
 
    var typeMemory = $("#optionType").find(':selected').text();
@@ -61,15 +104,15 @@ $("#optionTam").change(function(){
       console.log(valueCurrent);
       $(".alertMem").removeClass("show");
       $(".alertMem").addClass("hide");
+      $(".alertMem").addClass("disabled")
       $("#collapseExample").removeClass("show");
       $(".optionFitTwo").show();
       $(".optionFitOne").hide();
    }
 });
-
- //-------------------------
-
- //control de ajuste de memoria
+//control del tipo de memoria
+//--------------------------------
+//control de ajuste de memoria
  $("#optionSet").change(function(){
    var setMemory = $("#optionSet").find(':selected').text();
 
@@ -91,7 +134,6 @@ $("#optionTam").change(function(){
 
  });
 
-  //--------------------------------------------------------------------------
   $("#optionAlgo").change(function(){
    var rr = $("#optionAlgo").find(':selected').text();
    if (rr == 'Round Robin'){
@@ -100,142 +142,237 @@ $("#optionTam").change(function(){
    } else{
     $('.alertRR').removeClass('show');
     $('.alertRR').addClass('hide');
+    $(".alertRR").addClass("disabled");
    }
 });
- //Generacion de particiones
-//--------------------------------
- //agregar particiones
- $(".optionPart").off().change(function(){
-  var partition = $("#optionPart").find(':selected').text();
-  var cantidad = parseInt(partition); console.log(cantidad)
-  $('#rowspan').append($('<span class="mt-5 lead">Ingrese el tamaño de las particiones</span>'));
-
-  if (partition == '1') { 
-    $('#partinput').append($('<input type="email" id="materialContactFormEmail" class="form-control py-3 mb-2 mt-1" placeholder="Partición 1">'));
-    $('#partbtn1').append($('<button class="btn btn-outline-info z-depth-0 waves-effect py-2" type="submit">Agregar</button>'));
-    $('#partbtn2').append($('<button class="btn btn-outline-danger z-depth-0 waves-effect py-2" type="submit" id="qbtn1">Quitar</button>'));
-
-  } else {
-        for (var i = 1; i <= cantidad ; i++) {  
-          $('#partinput').append($('<input type="email" id="materialContactFormEmail" class="form-control py-3 mb-2 mt-1" placeholder="Partición '+i+'">'));
-          $('#partbtn1').append($('<button class="btn btn-outline-info z-depth-0 waves-effect btn-sm py-2 mb-1" type="submit">Agregar</button>'));
-          $('#partbtn2').append($('<button class="btn btn-outline-danger z-depth-0 waves-effect btn-sm py-2 mb-1" type="submit" id="qbtn'+i+'">Quitar</button>'));
-          console.log(cantidad)
-        }
-  }
-  return i;
-   
-});
+//control de la seleccion de algoritmo
 
 //--------------------------------------------------------------------------
- $(".inputMemory").keyup(function(){
-   $('.alertPart').removeClass('show');
-   $('.alertPart').addClass('hide');
-   console.log('activo')
-   var sizepart = parseInt($('.inputMemory').val())
+//Generacion de particiones
+//agregar particion - control de input 
+$(".inputMemory").keyup(function(){
+  $('.alertPart').removeClass('show');
+  $('.alertPart').addClass('hide');
 
-   if (sizepart > 0) {
-     $('.alertPart').removeClass('show');
-     $('.alertPart').addClass('hide');
-   }else {
-     $(".textoAlertPart").text("Debe ingresar un numero mayor a cero.");
-     $('.alertPart').addClass('show');
-   }
- });
+  var sizepartinput = parseInt($('.inputMemory').val());
+  console.log(sizepartinput);
 
- $(document).on('click', '.btn-add', function(e){
-   $('.alertPart').removeClass('show');
-   $('.alertPart').addClass('hide');
-
-   $('.alertPart').removeClass('alert-success');
-   $('.alertPart').addClass('alert-danger');
-
-   e.preventDefault();
-
-   var controlForm = $('.controls form:first'),
-       currentEntry = $(this).parents('.entry:first');
-
-   //Variable que nos indica en cada momento el tamaño disponible
-   var tamdisp = sizeMemory
-
-   //Verificamos la existencia de alguna particion
-   if(memFija.length > 0){
-     // memFija.forEach(function(sizepart,index) {
-     //   tamdisp =  tamdisp - sizepart
-     // })
-     for (var i = 0; i < memFija.length; i++) {
-       tamdisp = tamdisp - memFija[i].size;
-     }
-
-   }
-
-   //Tamaño de particion ingreasda
-   var sizepart = currentEntry.find('input').val();
-
-   sizepart = parseInt(sizepart);
-
-   if (sizepart > 0) {
-
-     if (sizepart <= tamdisp) {
-
-       //se puede agregar particion
-       //memFija.push(sizepart)
-
-       var objPart = {};
-       objPart.IdPart = cont;
-       objPart.size = sizepart;
-       objPart.used = "";
-
-       memFija.push(objPart);
-
-
-       cont = cont + 1;
-
-       var controlForm = $('.controls form:first'),
-           currentEntry = $(this).parents('.entry:first');
-
-       if (cont < maxpart) {
-         var newEntry = $(currentEntry.clone()).appendTo(controlForm);
-
-         newEntry.find('input').val('');
-
-         newEntry.find('.textPart').text("Partición " + cont)
-
-         controlForm.find('.entry:not(:last) .inputMemory')
-           .addClass('classDisabled')
-           .removeClass('inputMemory')
-           .prop("disabled", true);
-
-         controlForm.find('.entry:not(:last) .btn-add')
-             .removeClass('btn-add').addClass('btn-remove')
-             .removeClass('btn-success').addClass('btn-danger')
-             .html('<span class="glyphicon glyphicon-minus deleteInput">Quitar</span>');
-
-           }else {
-         controlForm.find('.entry:last .inputMemory')
-           .addClass('classDisabled')
-           .removeClass('inputMemory')
-           .prop("disabled", true);
-
-         controlForm.find('.entry:last .btn-add')
-             .removeClass('btn-add').addClass('btn-remove')
-             .removeClass('btn-success').addClass('btn-danger')
-             .html('<span class="glyphicon glyphicon-minus deleteInput">Quitar</span>');
-       }
-
-     }else {
-
-       //Alerta por Nueva Particion muy grande
-       $(".textoAlertPart").text("El tamaño de la partición es mayor al disponible.");
-       $('.alertPart').addClass('show');
-
-     }
-
-   }else {
-     $(".textoAlertPart").text("Debes Ingresar un Valor");
-     $('.alertPart').addClass('show');
-     }
+  if (sizepartinput > 0) {
+    $('.alertPart').removeClass('show');
+    $('.alertPart').addClass('hide');
+  }else {
+    $(".textoAlertPart").text("Debe ingresar un numero mayor a cero.");
+    $('.alertPart').addClass('show');
+  }
 });
+
+//agregar particion - generacion de input
+$('#formid').off().on('click', '.btn-add',function(e){
+  $('.alertPart').removeClass('show');
+  $('.alertPart').addClass('hide');
+
+  $('.alertPart').removeClass('alert-success');
+  $('.alertPart').addClass('alert-danger');
+
+  e.preventDefault();
+
+  var controlForm = $('#formid:first'),
+      currentEntry = $(this).parents('.entry:first');
+  
+  //Variable que nos indica en cada momento el tamaño disponible
+  var tamdisp = sizeMemory
+  console.log(tamdisp);
+
+  //Verificamos la existencia de alguna particion
+  if(memFija.length > 0){
+
+    for (var i = 0; i < memFija.length; i++) {
+      tamdisp = tamdisp - memFija[i].size;
+      console.log(tamdisp);
+    }
+  }
+
+  //Tamaño de particion ingresada
+  var sizepart = currentEntry.find('input').val();
+  console.log(sizepart);
+
+  sizepart = parseInt(sizepart);
+  console.log(sizepart);
+  if (sizepart > 0) {
+
+    if (sizepart > tamdisp) {
+      //Alerta por Nueva Particion muy grande
+      $(".textoAlertPart").text("El tamaño de la partición es mayor al disponible.");
+      $('.alertPart').addClass('show');
+    } 
+    
+    if (sizepart <= tamdisp) {
+      console.log('dentro de la funcion de agregar particion')
+      //se puede agregar particion
+
+      var objPart = {};
+      objPart.IdPart = cont;
+      objPart.size = sizepart;
+      objPart.used = "";
+
+      memFija.push(objPart);
+      cont = cont + 1;
+
+      var controlForm = $('#formid:first'),
+          currentEntry = $(this).parents('.entry:first');
+          console.log(controlForm,currentEntry);
+
+      if (cont < maxpart) {
+        var newEntry = $(currentEntry.clone()).appendTo(controlForm);
+        console.log('el tamaño de la particion actual es: ',cont)
+        newEntry.find('input').val('');
+
+        newEntry.find('.textPart').text("Partición " + cont)
+
+        controlForm.find('.entry:not(:last) .inputMemory')
+          .attr('id', 'btn-quitar')
+          .addClass('classDisabled')
+          .removeClass('inputMemory')
+          .prop("disabled", true);
+
+        controlForm.find('.entry:not(:last) .btn-add')
+            .removeClass('btn-add').addClass('btn-remove')
+            .removeClass('btn-outline-info').addClass('btn-outline-danger')
+            .html('<span class="glyphicon glyphicon-minus deleteInput">Quitar</span>')
+
+        }else {
+          controlForm.find('.entry:last .inputMemory')
+            .attr('id', 'btn-quitar')
+            .addClass('classDisabled')
+            .removeClass('inputMemory')
+            .prop("disabled", true);
+
+          controlForm.find('.entry:last .btn-add')
+              .removeClass('btn-add').addClass('btn-remove')
+              .removeClass('btn-outline-info').addClass('btn-outline-danger')
+              .html('<span class="glyphicon glyphicon-minus deleteInput">Quitar</span>')         
+        }
+      }
+
+      } else {
+        $(".textoAlertPart").text("Debes Ingresar un Valor");
+        $('.alertPart').addClass('show');
+      }
+
+console.log(memFija);
+}); 
+
+//--------------------------------------------------------------------------
+//Borrado de particion
+//EliminamosFisicamente
+function elimPart(partSize){
+console.log('dentro de la funcion elimPart')
+  for (var i = 0; i < memFija.length; i++) {
+    if (memFija[i].size == partSize){
+      memFija[i].size = 0;
+    }
+  }
+};
+
+//Borrado de particion
+$(document).on('click','.btn-remove', function(){
+  console.log('dentro de la funcion de borrado de particion')
+
+  var currentEntry = $(this).parents('.entry:first');
+  var sizeElim = currentEntry.find('input').val();
+  elimPart(sizeElim);
+  currentEntry.find('input').val('');
+  currentEntry.find('.classDisabled')
+    .addClass('inputMemory')
+    .removeClass('classDisabled')
+    .prop("disabled", false);
+
+  currentEntry.find('.btn-remove')
+      .removeClass('btn-remove').addClass('btn-udp')
+      .removeClass('btn-outline-danger').addClass('btn-outline-info')
+      .html('<span class="glyphicon glyphicon-plus">Agregar</span>');
+      
+    $(".textoAlertPart").text("Particion Eliminada Correctamente.");
+    $('.alertPart').removeClass('alert-danger');
+    $('.alertPart').addClass('alert-success');
+    $('.alertPart').addClass('show');
+    
+});
+
+
+function setPart(sizePart){
+  for (var i = 0; i < memFija.length; i++) {
+    if (memFija[i].size == 0){
+      memFija[i].size = sizePart;
+    };
+  }
+};
+//Reinput luego de haber borrado una particion
+$(document).on('click','.btn-udp', function(){
+console.log('luego de haber borrado la particion')
+
+  $('.alertPart').removeClass('show');
+  $('.alertPart').addClass('hide');
+
+  var currentEntry = $(this).parents('.entry:first');
+  var sizeadd = parseInt(currentEntry.find('input').val());
+  if (sizeadd > 0) {
+    setPart(sizeadd);
+
+    currentEntry.find('.inputMemory')
+      .addClass('classDisabled')
+      .removeClass('inputMemory')
+      .prop("disabled", true);
+
+    currentEntry.find('.btn-udp')
+        .removeClass('btn-add').addClass('btn-remove')
+        .removeClass('btn-outline-info').addClass('btn-outline-danger')
+        .html('<span class="glyphicon glyphicon-minus deleteInput">Quitar</span>');
+
+  }else {
+    $(".textoAlertPart").text("Debes Ingresar un Valor");
+    $('.alertPart').removeClass('alert-success');
+    $('.alertPart').addClass('alert-danger');
+    $('.alertPart').addClass('show');
+  }
+  });
+
+
+//control de ajuste de memoria
+//--------------------------------------------------------------------------
+//control de la seleccion de algoritmo
+ /*   $(".optionPlaningOne").click(function(){
+    var valueCurrent = $(".optionPlaningOne > input").val();
+    algorithm = valueCurrent;
+    console.log(algorithm);
+    $(".quantumIn").val("");
+    $(".quantumIn").hide();
+    $(".algoInfo").text("FCFS");
+ });
+ $(".optionPlaningTwo").click(function(){
+    var valueCurrent = $(".optionPlaningTwo > input").val();
+    algorithm = valueCurrent;
+    console.log(algorithm);
+    $(".quantumIn").show();
+    $(".algoInfo").text("RR");
+ });
+ $(".optionPlaningThree").click(function(){
+    var valueCurrent = $(".optionPlaningThree > input").val();
+    algorithm = valueCurrent;
+    console.log(algorithm);
+    $(".quantumIn").val("");
+    $(".quantumIn").hide();
+    $(".algoInfo").text("SJF");
+ });
+ $(".optionPlaningFour").click(function(){
+    var valueCurrent = $(".optionPlaningFour > input").val();
+    algorithm = valueCurrent;
+    console.log(algorithm);
+    $(".quantumIn").hide();
+    $(".algoInfo").text("SRTF");
+ }); */
+
+
  //------------------------------------
  /* console.log('activo')
  $( ".option" ).change(function() {
