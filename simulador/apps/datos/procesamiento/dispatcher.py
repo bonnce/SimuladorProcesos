@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 class Dispatcher(ABC):
 	def __init__(self, cola_listos, cola_bloqueados, memoria_handler):
@@ -23,9 +23,11 @@ class Dispatcher(ABC):
 		return self.proceso_ejecucion
 
 	def get_tiempo_espera(self):
+		pass
 
 
 	def cambio_contexto(self):
+		pass
 
 
 
@@ -45,6 +47,7 @@ class SimuladorFCFS(Dispatcher):
 		pass
 
 	def ejecutar_ciclo(self):
+		pass
 
 
 class SimuladorPRIO(Dispatcher):

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.http import HttpResponse
-from .procesamiento.dispatcher import SimuladorRR, SImuladorFCFS, SimuladorRR, SimuladorPRIO
+from .procesamiento.dispatcher import SimuladorRR, SimuladorFCFS, SimuladorRR, SimuladorPRIO
 import json
 
 
