@@ -6,7 +6,7 @@
   <link href="{% static 'css/simulador/inicio.css' %}" rel="stylesheet">   
 {% endblock styleLink %} 
 
-{% block title %}Memoria{% endblock title %}
+{% block title %}Inicio{% endblock title %}
 
 {% block content %}
             <header>
@@ -20,12 +20,19 @@
                     <div class="row mt-5">
                       <!--Grid column-->
                       <div class="col-md-6 mb-5 mt-5 white-text text-center text-md-left">
-                        <h1 class="h1-responsive font-weight-bold wow fadeInLeft lead blue-grey-text " data-wow-delay="0.5s">Bienvenidos</h1>
+                        <h1 class="h1-responsive font-weight-bold wow fadeInLeft lead blue-grey-text " data-wow-delay="0.3s">Bienvenidos</h1>
                         <hr class="hr-blue-grey wow fadeInLeft" data-wow-delay="0.5s">
                         <h6 class="mb-3 wow fadeInLeft text-justify lead blue-grey-text " data-wow-delay="0.5s">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem repellendus quasi fuga
                         nesciunt dolorum nulla magnam veniam sapiente, fugiat! Commodi sequi non animi ea
                         dolor molestiae, quisquam iste, maiores. Nulla.</h6>
-                        <a class="btn btn-blue-grey text-white d-flex justify-content-center fadeInLeft wow rgba-black-light" data-wow-delay="0.5s" href="{% url 'config' %}">Comenzar</a>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <a class="btn btn-blue-grey text-white d-flex justify-content-center fadeInLeft wow rgba-black-light" data-wow-delay="0.7s" href="{% url 'ayuda' %}">Primeros Pasos</a>
+                          </div>
+                          <div class="col-md-6">
+                            <a class="btn btn-blue-grey text-white d-flex justify-content-center fadeInLeft wow rgba-black-light" data-wow-delay="0.7s" href="{% url 'config' %}">Comenzar</a>
+                          </div>
+                        </div>
                       </div>
                       <!--Grid column-->
 
@@ -43,9 +50,4 @@
               <!-- Full Page Intro -->
             </header>
             <!-- Main navigation -->
-
-{% block Scripts %}
-  <script src="{% static 'js/simulador/inicio.js' %}"></script>
-{% endblock Scripts %}
-
 {% endblock content %}

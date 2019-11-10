@@ -12,86 +12,88 @@
 
     <!--MENU-->
     <div class="container-fluid">
-            <ul class="nav cloudy-knoxville-gradient py-3 mb-md-0 mb-4 mt-3 font-weight-bold z-depth-1 d-flex justify-content-around" id="myTab" role="tablist">
-                <li class="nav-item active">
-                    <a class="nav-link text-black-50" href ="{% url 'config' %}">Reiniciar Configuración
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>           
-                <li class="nav-item">
-                    <a class="nav-link text-black-50" id="procesos-tab" href="#cargaTrabajo" role="tab" aria-controls="procesos" aria-selected="false">Carga de Trabajo</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-black-50" id="visualizacion-tab" href="{% url 'presentacion' %}" role="tab" aria-controls="visualizacion" aria-selected="false">Presentación</a>
-                </li>
-            </ul>
+        <ul class="nav cloudy-knoxville-gradient py-3 mb-md-0 mb-4 mt-3 font-weight-bold z-depth-1 d-flex justify-content-around" id="myTab" role="tablist">
+            <li class="nav-item active">
+                <a class="nav-link text-black-50" href ="{% url 'config' %}">Reiniciar Configuración
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>           
+            <li class="nav-item">
+                <a class="nav-link text-black-50" id="procesos-tab" href="#cargaTrabajo" role="tab" aria-controls="procesos" aria-selected="false">Carga de Trabajo</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-black-50" id="visualizacion-tab" href="{% url 'presentacion' %}" role="tab" aria-controls="visualizacion" aria-selected="false">Presentación</a>
+            </li>
+        </ul>
     </div>
     <!--MENU-->
-    <!--Grid row cards-->
-    <div class="container-fluid" id="#configuracion">  
-        <div class="row mt-5">   
-        <!--Asignacion de Memoria-->
-            <div class="col-md-6 d-flex align-items-start align-items-center flex-column">
-                <!--Card content-->
-                <div class="card" id="card-memory">
-                    <h5 class="card-header info-color white-text text-center py-4 mb-4">
-                        <strong>Asignación de Memoria</strong>
-                    </h5>     
-                    <form method="GET">
+    <div class="container-fluid mt-2" id="#configuracion">
+        <form action="" class="md-form input-group d-flex justify-content-center" role="form" autocomplete="off">
+            <div class="card-deck row mt-5">
+            <!--Asignacion de Memoria-->
+                <div class="col-md-6 px-5 d-flex align-items-center flex-column">
+                    <!--Card content-->
+                    <div class="card" id="card-memory">
+                        <h5 class="card-header info-color white-text text-center py-4 mb-4">
+                            <strong>Asignación de Memoria</strong>
+                        </h5>     
                         <div class="card-body px-lg-5 pt-0 memorySelect">
+                            <div class="row">
+                                <span class="col-md-12 lead mb-3">Selecciona tu configuración de memoria</span>
+                            </div>
                             <span class="mt-5 lead">Tamaño de la Memoria</span>
-                            <select class="browser-default custom-select mb-4 mt-3" id="optionTam">
+                            <select class="browser-default custom-select mt-3" id="optionTam">
                                 <option value="" disabled selected>Selecciona</option>
                                 <option class="optionOne" value="256">256 KB</option>
                                 <option class="optionTwo" value="512">512 KB</option>
                                 <option class="optionThree" value="1024">1024 KB</option>
                             </select>
+                            <p class="text-muted muted-tam mb-4 mt-2">El tamaño de la memoria por defecto es 256 KB</p>
 
-                            <div class="row mt-4">
+                            <div id="btn-hide" class="row mt-4">
                                 <span class="col-md-12 lead">Tipo de Memoria</span>
-                                <select class="col-md-6 browser-default custom-select mb-5 mt-3 ml-3" id="optionType">
+                                <select class="col-md-6 browser-default custom-select mt-3 ml-3" id="optionType">
                                     <option value="" disabled selected>Selecciona</option>
                                     <option class="optionTypeTwo" value="Variable">Variable</option>
                                     <option class="optionTypeOne" value="Fija">Fija</option>
                                 </select> 
-                                <div class="col-md-4 text-center fade hide alertMem mb-4 mt-2 ml-1 px-0" id="btn-parts">
-                                    <a href="" id="btn-parts" class="btn btn-default" data-toggle="modal" data-target="#modalLoginForm">Particiones</a>
+                                <div class="col-md-4 text-center fade hide alertMem  mt-2 ml-1 px-0">
+                                    <a id="btn-parts" class="btn btn-outline-info mx-4 my-2 p-2 waves-effect waves-light" data-toggle="modal" data-target="#modalLoginForm">Particiones</a>
                                 </div>
+                                <p class="col-md-12 text-muted muted-type mb-4">El tipo de memoria por defecto es Variable</p>
                             </div>
 
                             <span class="mt-3 lead">Ajuste de la Memoria</span>
-                            <select class="browser-default custom-select mb-4 mt-3" id="optionSet">
+                            <select class="browser-default custom-select  mt-3" id="optionSet">
                                 <option value="" disabled selected>Selecciona</option>
                                 <option class="optionFitThree" value="First Fit">First Fit</option>
                                 <option class="optionFitTwo" value="Worst Fit">Worst Fit</option>
                                 <option class="optionFitOne" value="Best Fit">Best Fit</option>
                             </select>
-                            <button class="btn btn-outline-info btn-rounded btn-block z-depth-0 my-3 waves-effect" type="submit">Guardar</button>
+                            <p class="col-md-12 text-muted muted-set mt-2 p-0 mb-4">El ajuste de memoria por defecto es First Fit</p>
                         </div>
-                    </form>
-                    <!--Generación de Particiones-->
-                    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                    aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content"  id="modalMemory">
-                                <div class="modal-header text-center">
-                                    <h4 class="modal-title w-100 font-weight-bold">Generación de Particiones</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body mx-3">
-                                    <div class=" mt-2 alert alert-info alert-dismissible fade hide alertMem" role="alert">
-                                    <strong class="textoAlertMem">5 es la cantidad maxima de particiones para el tamaño de memoria elegida.</strong>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <span class="mt-5 lead">Ingresa el tamaño de las Particiones:</span>
-                                <div class="controls">
-                                    <form class="md-form input-group mb-3" role="form" autocomplete="off" id="formid">
-                                        <div class="entry input-group-prepend">
-                                            <div class="controls">
+                        <!--Generación de Particiones-->
+                        <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                        aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content"  id="modalMemory">
+                                    <div class="modal-header text-center">
+                                        <h4 class="modal-title w-100 font-weight-bold">Generación de Particiones</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body mx-3">
+                                        <div class=" mt-2 alert alert-info alert-dismissible fade hide alertMem" role="alert">
+                                            <strong class="textoAlertMem">5 es la cantidad maxima de particiones para el tamaño de memoria elegida.</strong>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <span class="mt-5 lead">Ingresa el tamaño de las Particiones:</span>
+                                   
+                                        <div class="controls" id="controlid">
+                                            <form role="form" autocomplete="off">
                                                 <div class="entry input-group-prepend">
                                                     <span class="input-group-text textPart md-addon py-0">Partición 0</span>
                                                     <input class="form-control inputMemory ml-2" name="fields[]" placeholder="Ingrese el tamaño" id="Memoryinput"/>
@@ -99,129 +101,181 @@
                                                         <button class="btn btn-outline-info z-depth-0 waves-effect mb-1 btn-sm btn-add" type="button">
                                                             <span class="glyphicon glyphicon-plus">Agregar</span>
                                                         </button>      
-                                                    </span>
+                                                    </span>    
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
-                                    </form>
-                                    <div class="mt-2 alert alert-danger alert-dismissible fade hide alertPart" role="alert">
-                                        <strong class="textoAlertPart">Error, No puede ingresar mas particiones.</strong>
+                                    
+                                        <div class="mt-2 alert alert-danger alert-dismissible fade hide alertPart" role="alert">
+                                            <strong class="textoAlertPart">Error, No puede ingresar mas particiones.</strong>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-footer d-flex justify-content-center">
+                                            <button class="btn btn-default" data-dismiss="modal" type="submit">Confirmar</button>  
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div> 
+                        </div>
+                        <!--Generación de Particiones-->  
+                    </div>
+                    <!--Card content-->
+                </div>
+            <!--Asignacion de Memoria-->
+            <!--Politica de Planificacion-->
+                <div class="col-md-6 px-5 d-flex align-items-center flex-column">
+                    <div class="card">
+                        <h5 class="card-header info-color white-text text-center py-4">
+                            <strong>Politica de Planificación</strong>
+                        </h5>
+                        <!--Card content-->
+                        <div class="card-body px-lg-5 pt-0">
+                            <!-- Form -->
+                            <form class="" style="color: #757575;" method="GET">
+                                <div class="row mt-4">
+                                    <span class="col-md-12 lead">Selecciona el algortimo de planificación</span>
+                                    <select class="col-md-6 browser-default custom-select  mt-3 ml-3" id="optionAlgo">
+                                        <option value="" disabled selected>Selecciona</option>
+                                        <option class="optionPlaningOne" value="FCFS">FCFS</option>
+                                        <option class="optionPlaningTwo" value="RR">Round Robin</option>
+                                        <option class="optionPlaningThree" value="Prioridades">Prioridades</option>
+                                        <option class="optionPlaningFour" value="Multinivel">Multinivel sin Retro</option>         
+                                    </select> 
+                                    <div class="col-md-4 text-center fade hide alertRR mt-3 ml-3 px-0" id="btn-parts">
+                                        <input type="text" id="materialContactFormName" class="form-control" placeholder="Quantum">
+                                    </div>
+                                    <p class="col-md-12 text-muted muted-algo p-0 ml-3 mt-2">El algortimo de planificación por defecto es FCFS</p>
+                                </div>
+                                <span class="text-dark lead d-flex justify-content-start">Cargar nuevo proceso</span>
+                                <div class="row mx-auto">
+                                    <!--Nombre del Proceso-->
+                                    <div class="md-form col-md-6">
+                                            <input type="text" id="materialContactFormName" class="form-control nomProc">
+                                            <label for="materialContactFormName">Nombre del Proceso</label>
+                                    </div> 
+                                    <!-- E-mail -->
+                                    <div class="md-form col-md-6 alertPriod fade hide">
+                                        <input type="text" id="materialContactFormName" class="form-control priodInput">
+                                        <label for="materialContactFormName">Prioridad del Proceso</label>
+                                    </div>
+                                    <!--Tamaño-->
+                                    <div class="md-form col-md-6 my-0">
+                                        <input type="text" id="materialContactFormName" class="form-control sizeInput">
+                                        <label for="materialContactFormName">Tamaño</label>
+                                    </div>
+                                    <!--Tiempo de Arribo-->
+                                    <div class="md-form col-md-6 my-0">
+                                            <input type="text" id="materialContactFormName" class="form-control arrivalInput">
+                                            <label for="materialContactFormName">Tiempo de Arribo</label>
+                                        </div>
+                                    <div class="md-form px-0 col-md-8 py-1 my-4">
+                                        <span class="lead">Ciclo de vida del Proceso ------></span>  
+                                    </div>
+                                    <div class="md-form col-md-4 my-3">
+                                        <button class="btn btn-outline-info btn-rounded z-depth-0 waves-effect" type="button" data-toggle="modal" data-target="#modalLifeProcess">Definir</button>
+                                    </div>
+                                    <!--Generación del ciclo de vida del proceso-->
+                                    <div class="modal fade bottom" id="modalLifeProcess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-bottom" role="document">
+                                            <div class="modal-content"  id="modalMemory">
+                                                <div class="modal-header text-center">
+                                                    <h4 class="modal-title w-100 font-weight-bold">Generación del Ciclo de Vida</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body py-0 mx-3">
+
+                                                    <div class="rafdynamic" id="rafdynamicId">
+                                                        <form class="md-form" role="form" autocomplete="off">
+                                                            <div class="entryRaf input-group-prepend">
+                                                                <!--CPU 0-->
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text col-md-2 py-0 md-addon textCpu">CPU 0</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control my-3 p-0 inputcpu" name="cpu[]">
+                                                                </div>
+                                                                <!--E/S 0-->
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text col-md-2 py-0 md-addon textEs">E/S 0</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control my-3 p-0 inputes" name="es[]">
+                                                                </div>
+                                                                 <!--Agregar rafagas-->
+                                                                 <div class="input-group">
+                                                                    <span class="input-group-btn-raf col-md-2 p-0 ml-3 mt-4 mb-3">
+                                                                        <button class="btn btn-outline-info z-depth-0 waves-effect btn-sm btn-add-raf" type="button">
+                                                                            <span class="glyphicon glyphicon-plus">Agregar</span>
+                                                                        </button>      
+                                                                    </span> 
+                                                                </div>       
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer d-flex justify-content-center">
+                                                        <button class="btn btn-default" data-dismiss="modal" type="submit">Confirmar</button>  
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                        </div> 
+                                    </div>
+                                    <!--Generación del ciclo de vida del proceso-->
+                                    <!--Last CPU-->
+                                    <div class="md-form col-md-8 mb-2 mt-0">
+                                            <input type="text" id="materialContactFormEmail" class="form-control lastCpu">
+                                            <label for="materialContactFormEmail">Last CPU</label>
+                                    </div>  
+                                    <div class="col-md-4 mb-2 mt-0" id="botonagregar">
+                                        <button class="btn btn-outline-info btn-rounded z-depth-0 waves-effect btn-add-raf" type="button" value="agregarproceso" onclick="saveData()">Guardar</button>
+                                    </div>
+                                    <div class="my-1 mx-auto alert alert-danger alert-dismissible fade hide alertProcess" role="alert">
+                                        <strong class="textoAlertProc">Ingrese Datos</strong>
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <div class="modal-footer d-flex justify-content-center">
-                                        <a href="{% url 'config' %}">
-                                            <button class="btn btn-default" type="submit">Confirmar</button>
-                                        </a>
-                                    </div>
                                 </div>
-                            </div>  
-                        </div> 
+                            </form>
+                            <!-- Form -->
+                        </div>
+                        <!--Card content-->
                     </div>
-                    </div>
-                    <!--Generación de Particiones-->
-                <!--Card content-->
                 </div>
-            </div>
-        <!--Asignacion de Memoria-->
-        <!--Politica de Planificacion-->
-            <div class="col-md-6 d-flex align-items-end align-items-center flex-column">
-                <div class="card">
-                    <h5 class="card-header info-color white-text text-center py-4">
-                        <strong>Politica de Planificación</strong>
-                    </h5>
-                    <!--Card content-->
-                    <div class="card-body px-lg-5 pt-0">
-                        <!-- Form -->
-                        <form class="text-center" style="color: #757575;" method="GET">
-                            <div class="row mt-4">
-                                <span class="col-md-12 lead">Selecciona el algortimo de planificación</span>
-                                <select class="col-md-6 browser-default custom-select mb-3 mt-3 ml-3" id="optionAlgo">
-                                    <option value="" disabled selected>Selecciona</option>
-                                    <option class="optionPlaningOne" value="FCFS">FCFS</option>
-                                    <option class="optionPlaningTwo" value="RR">Round Robin</option>
-                                    <option class="optionPlaningThree" value="Prioridades">Prioridades</option>
-                                    <option class="optionPlaningFour" value="Multinivel">Multinivel sin Retro</option>         
-                                </select> 
-                                <div class="col-md-4 text-center fade hide alertRR mt-3 ml-3 px-0" id="btn-parts">
-                                    <input type="text" id="materialContactFormName" class="form-control" placeholder="Quantum">
-                                </div>
-                            </div>
-                            <span class="text-dark lead d-flex justify-content-start">Cargar nuevo proceso</span>
-                            <div class="row">
-                                <!--Nombre del Proceso-->
-                                <div class="md-form col-md-8">
-                                        <input type="text" id="materialContactFormName" class="form-control nomProc">
-                                        <label for="materialContactFormName">Nombre del Proceso</label>
-                                </div> 
-                                <!-- E-mail -->
-                                <div class="md-form col-md-4">
-                                    <button class="btn btn-outline-info btn-rounded z-depth-0 waves-effect editarNombre" type="button">Editar</button>
-                                </div>
-                                <!--Tamaño-->
-                                <div class="md-form col-md-6 my-0">
-                                    <input type="text" id="materialContactFormName" class="form-control sizeInput">
-                                    <label for="materialContactFormName">Tamaño</label>
-                                </div>
-                                <!--Tiempo de Arribo-->
-                                <div class="md-form col-md-6 my-0">
-                                        <input type="text" id="materialContactFormName" class="form-control arrivalInput">
-                                        <label for="materialContactFormName">Tiempo de Arribo</label>
-                                    </div>
-                                
-                                <!--CPU 0-->
-                                <div class="md-form col-md-4 my-3">
-                                        <input type="text" id="materialContactFormEmail" class="form-control inputcpu">
-                                        <label for="materialContactFormEmail">CPU 0</label>
-                                </div>
-                                <!--E/S 0-->
-                                <div class="md-form col-md-4 my-3">
-                                        <input type="text" id="materialContactFormEmail" class="form-control inputes">
-                                        <label for="materialContactFormEmail">E/S 0</label>
-                                </div>
-                                <div class="md-form col-md-4 my-3">
-                                        <button class="btn btn-outline-info btn-rounded z-depth-0 waves-effect" type="button">Guardar</button>
-                                </div>
-                                <!--Last CPU-->
-                                <div class="md-form col-md-8 my-3">
-                                        <input type="text" id="materialContactFormEmail" class="form-control lastCpu">
-                                        <label for="materialContactFormEmail">Last CPU</label>
-                                </div>  
-                                <div class="md-form col-md-4 my-2" id="botonagregar">
-                                        <button class="btn btn-outline-info btn-rounded z-depth-0 waves-effect btn-add-raf" type="submit" value="agregarproceso">Agregar</button>
-                                </div>
-                            </div>
-                        </form>
-                        <!-- Form -->
-                    </div>
-                    <!--Card content-->
-                </div>
-            </div>
-        <!--Politica de Planificacion-->
-        <!--Carga de Trabajo-->
-            <div class="col-md-12 mt-5 mb-2 d-flex align-items-start align-items-center flex-column" id="cargaTrabajo">
-                <h5 class="card-title mt-5">Carga de Trabajo</h5>
-                    <table class="table table-hover table-dark tableCustom" >
+            <!--Politica de Planificacion-->
+            </div>  
+            <!--Carga de Trabajo-->
+            <div class="col-md-12 mb-2 mx-auto d-flex justify-content-center flex-column" id="cargaTrabajo">
+                <div class="container mx-auto">
+                    <h5 class="card-title mx-auto d-flex justify-content-center mt-5">Carga de Trabajo</h5>      
+                    <table class="my-3 table table-hover grey lighten-2 tableCustom">
                         <thead>
                             <tr class="trCustom">
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Tamaño (KB)</th>
                                 <th scope="col">T. Arribo</th>
                                 <th scope="col">Ciclo de Vida (CPU-E/S-..-CPU)</th>
-                                <th scope="col"></th>
+                                <th scope="col">Eliminar</th>
                             </tr>
                         </thead>
                         <tbody id="tableId">
                         </tbody>
                     </table>
+                </div>
+            </div>   
+            <!--Carga de Trabajo--> 
+            <!--Confirmar formulario--> 
+            <div class="col-md-12 mb-2 mx-auto d-flex align-content-center flex-column" id="btnconfirmacion">
+                <button class="btn btn-outline-default z-depth-0 waves-effect" type="submit">Confirmar</button>  
             </div>
-        <!--Carga de Trabajo-->
-        </div>
+            <!--Confirmar formulario--> 
+        </form> 
     </div>
     <!--Grid row cards-->
-{% block Scripts %}
-    <script src="{% static 'js/simulador/config.js' %}"></script>
-{% endblock Scripts %}
+    
+    <!--Grid row cards-->
 
 {% endblock content %}

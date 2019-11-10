@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styleLink %}
+  <link href="{% static 'css/simulador/inicio.css' %}" rel="stylesheet">   
+{% endblock styleLink %} 
+
+{% block title %}Primeros Pasos{% endblock title %}
+
+{% block content %}
+
+<h1>Pagina de Ayuda</h1>
+<a class="btn btn-blue-grey text-white d-flex justify-content-center fadeInLeft wow rgba-black-light" data-wow-delay="0.7s" href="{% url 'config' %}">Comenzar</a>
+
+{% endblock content %}

@@ -11,17 +11,13 @@ class HomePageView(TemplateView):
     
     template_name = "inicio.html"
 
+class HelpPageView(TemplateView):
+        
+    template_name = "ayuda.html"
+
 class ConfigView(TemplateView):
     
     template_name = "configuracion.html"
-
-class MemoriaView(TemplateView):
-    
-    template_name = "memoria.html"
-
-class ProcessView(TemplateView):
-    
-    template_name = "procesos.html"
  
 class PresentationView(TemplateView):
     

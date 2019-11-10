@@ -1,4 +1,4 @@
-console.log('activo')
+console.log('activo test.js')
 
 document.querySelector('#botonagregar').addEventListener('click', traer);
 
