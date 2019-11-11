@@ -19,10 +19,11 @@ from .views import HomePageView, HelpPageView, ConfigView, PresentationView
 from . import views
 
 urlpatterns = [
+
     path('admin/', admin.site.urls),
     path ('', HomePageView.as_view(), name = 'inicio'),
     path ('ayuda/', HelpPageView.as_view(), name = 'ayuda'),
     path ('configuracion/', ConfigView.as_view(), name = 'config'),
     path ('presentacion/', PresentationView.as_view(), name = 'presentacion'),
-     path('ajax/', views.foo, name='foo'),
+    path('ajax/', include('apps.datos.urls')),
 ]

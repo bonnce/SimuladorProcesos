@@ -1,5 +1,4 @@
 
-
 class Proceso():
 	def __init__(self, id_proceso, tam, arrivo, rafaga, prio = 0):
 		self.id = id_proceso
@@ -7,6 +6,10 @@ class Proceso():
 		self.arrivo = arrivo
 		self.rafaga = rafaga
 		self.prio = prio
+		self.tiempo_espera = 0
+
+	def inc_tiempo_espera(self):
+		self.tiempo_espera  += 1
 
 	def descontar_rafaga(self):
 		self.rafaga[0] -= 1
@@ -20,6 +23,9 @@ class Proceso():
 			self.eliminar_rafaga()
 
 	def proceso_terminado(self):
-		if not rafaga:
-			return True
-		return False
+		if rafaga:
+			return False
+		return True
+
+	def get_tiempo(self):
+		return self.tiempo_espera

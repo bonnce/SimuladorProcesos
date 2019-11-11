@@ -42,7 +42,7 @@
                                 <span class="col-md-12 lead mb-3">Selecciona tu configuración de memoria</span>
                             </div>
                             <span class="mt-5 lead">Tamaño de la Memoria</span>
-                            <select class="browser-default custom-select mt-3" id="optionTam">
+                            <select class="browser-default custom-select mt-3" id="optionTam" name="tam_memoria">
                                 <option value="" disabled selected>Selecciona</option>
                                 <option class="optionOne" value="256">256 KB</option>
                                 <option class="optionTwo" value="512">512 KB</option>
@@ -52,7 +52,7 @@
 
                             <div id="btn-hide" class="row mt-4">
                                 <span class="col-md-12 lead">Tipo de Memoria</span>
-                                <select class="col-md-6 browser-default custom-select mt-3 ml-3" id="optionType">
+                                <select class="col-md-6 browser-default custom-select mt-3 ml-3" id="optionType" name="tipo_memoria">
                                     <option value="" disabled selected>Selecciona</option>
                                     <option class="optionTypeTwo" value="Variable">Variable</option>
                                     <option class="optionTypeOne" value="Fija">Fija</option>
@@ -64,7 +64,7 @@
                             </div>
 
                             <span class="mt-3 lead">Ajuste de la Memoria</span>
-                            <select class="browser-default custom-select  mt-3" id="optionSet">
+                            <select class="browser-default custom-select mt-3" id="optionSet" name="algoritmo_memoria">
                                 <option value="" disabled selected>Selecciona</option>
                                 <option class="optionFitThree" value="First Fit">First Fit</option>
                                 <option class="optionFitTwo" value="Worst Fit">Worst Fit</option>
@@ -136,7 +136,7 @@
                             <form class="" style="color: #757575;" method="GET">
                                 <div class="row mt-4">
                                     <span class="col-md-12 lead">Selecciona el algortimo de planificación</span>
-                                    <select class="col-md-6 browser-default custom-select  mt-3 ml-3" id="optionAlgo">
+                                    <select class="col-md-6 browser-default custom-select  mt-3 ml-3" id="optionAlgo" >
                                         <option value="" disabled selected>Selecciona</option>
                                         <option class="optionPlaningOne" value="FCFS">FCFS</option>
                                         <option class="optionPlaningTwo" value="RR">Round Robin</option>

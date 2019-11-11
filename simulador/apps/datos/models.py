@@ -8,10 +8,6 @@ class DatosSimulacion(models.Model):
 
 
 
-def capturar_datos(request):
-	
-
-
 
 
 

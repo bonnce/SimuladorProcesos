@@ -40,21 +40,12 @@
             <a href="{% url 'config' %}">
               <button type="button" class="btn btn-info" disabled>Memoria</button><button type="button" class="btn btn-outline-info memInfo">Variable</button>
             </a>
+            <label>tamaño memoria: {{tam_memoria}}</label>
+            <label>tipo memoria: {{tipo_memoria}}</label>
+            <label>algoritmo memoria: {{algoritmo_memoria}}</label>
+            <label>algoritmo planificacion: {{algorimto_planif}}</label>
           </div>
-          <div class="col-lg-3">
-            <a href="{% url 'config' %}">  
-              <button id ="tam" type="button" class="btn btn-info" disabled>Tamaño</button><button type="button" class="btn btn-outline-info tamInfo">256</button>
-            </a>
-          </div>
-          <div class="col-lg-3">
-            <a href="{% url 'config' %}">  
-              <button type="button" class="btn btn-info" disabled>Ajuste</button><button type="button" class="btn btn-outline-info ajuInfo">First Fit</button>
-            </a>
-          </div>
-          <div class="col-lg-3">
-            <a href="{% url 'config' %}">  
-              <button type="button" class="btn btn-info" disabled>Algortimo</button><button type="button" class="btn btn-outline-info algoInfo">FCFS</button>
-            </a>
+
           </div>
         </div>
 
@@ -128,9 +119,20 @@
 
     <h5 class="timeWait"></h5>
 
-  </div>
+
 
 </div>
 
 </div>
+
+<script type="text/javascript">
+          function foo(){
+            $.ajax({
+              url:"{% url 'foo' %}",
+              success: function(data){
+                $('#ls').append(data["foo"]);
+              }
+            });
+          }
+        </script>
 {% endblock content%}

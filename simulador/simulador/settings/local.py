@@ -10,6 +10,6 @@ DATABASES = {
         'USER': 'develop',
         'PASSWORD': 'root',
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '5432',
     }
 }
