@@ -17,9 +17,6 @@
     <!-- Your custom styles (optional) -->
     <link href="{% static 'css/simulador/simulador.css' %}" rel="stylesheet">
 
-     <!-- JQuery -->
-     <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
-
     {% block styleLink %} {% endblock styleLink %}
     
     <title>Simulador C1G6 | {% block title%}{% endblock title%}</title>
@@ -116,6 +113,8 @@
        <!-- Footer -->
    
     <!-- SCRIPTS -->    
+    <!-- JQuery -->
+    <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
     <!-- Bootstrap core JavaScript -->
@@ -124,8 +123,8 @@
     <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
  <!--    <script src="{% static 'js/simulador/simulador.js' %}"></script> -->
     <script src="{% static 'js/simulador/inicio.js' %}"></script>
-    <script src="{% static 'js/simulador/config.js' %}"></script>
     <script src="{% static 'js/test/test.js' %}"></script>
+    <script src="{% static 'js/simulador/config.js' %}"></script>
     <!-- SCRIPTS -->
 </body>
 </html>

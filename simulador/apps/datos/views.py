@@ -62,5 +62,6 @@ def foo(request):
 		return HttpResponse(json.dumps({'foo':'luca puto '}), content_type="application/json")
 
 class PresentationView(TemplateView):
-	
-	template_name = "presentacion.html"
+        
+    template_name = "presentacion.html"
+

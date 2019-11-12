@@ -18,9 +18,19 @@ var tiempo = 0
 var lenArrayProcess = 0
 
 //Preparamos el entorno de trabajo
+$(function () {
+  $("[data-toggle=popover]").popover({
+        html: true
+    });
+})
+
+$(document).tooltip({
+    selector: '.tt'
+});
+
 $(document).ready(function(){
 
-  $("#Memoryinput, .alertRR, .priodInput, .sizeInput, .arrivalInput, .lastCpu").keydown(function(event) {
+  $("#Memoryinput, .alertRR, .priodInput, .sizeInput, .arrivalInput, .lastCpu, .inputcpu, .inputes").keydown(function(event) {
 
   //No permite mas de 11 caracteres Numéricos
   if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39) 
@@ -44,6 +54,33 @@ $(document).ready(function(){
 });     
 //Preparamos el entorno de trabajo
 //------------------------------------------------------------------------
+$(".quantumIn").keyup(function(){
+
+  var quanto = parseInt($('.quantumIn').val())
+
+  if (quanto > 0) {
+    generalQuantum = quanto;
+    $(".algoInfo").text("RR - Q:"+quanto);
+  }else {
+    $(".textoAlertProc").text("Debe ingresar un Quantum mayor a cero.");
+    $('.alertProcess').addClass('show');
+  }
+
+ });
+
+ $(".sizeInput").keyup(function(){
+
+  $('.alertProcess').removeClass('show');
+  $('.alertProcess').addClass('hide');
+
+  var tamProc = parseInt($('.sizeInput').val())
+  var maxTamPocess = getMaxProcessSize(typeMemory)
+
+  if (tamProc > maxTamPocess) {
+    $(".textoAlertProc").text("El tamaño del proceso no puede ser mayor al tamaño de la Memoria definido.");
+    $('.alertProcess').addClass('show');
+  }
+ });
 //control de la obtención del tamaño de la memoria
 $("#optionTam").off().change(function(){
     // Capturamos el valor seleccionado del desplegable
@@ -172,7 +209,7 @@ $('#controlid').off().on('click', '.btn-add',function(e){
 
   var controlForm = $('#controlid:first'),
       currentEntry = $(this).parents('.entry:first');
-  
+      console.log('controlform: ',controlForm);
   //Variable que nos indica en cada momento el tamaño disponible
   var tamdisp = sizeMemory
   console.log(tamdisp);
@@ -338,35 +375,29 @@ $("#optionAlgo").change(function(){
   $(".muted-algo").hide();
 
   if (typeAlgorithm == 'FCFS'){
-    var valueCurrent = $(".optionPlaningOne > input").val();
-    algorithm = valueCurrent;
+    algorithm = typeAlgorithm;
     console.log(algorithm);
     $(".quantumIn").val("");
     $(".quantumIn").hide();
     $(".algoInfo").text("FCFS");
  
   } else if (typeAlgorithm == 'Round Robin'){
-      var valueCurrent = $(".optionPlaningTwo > input").val();
-      algorithm = valueCurrent;
+      algorithm = typeAlgorithm;
       console.log(algorithm);
       $(".quantumIn").show();
       $(".algoInfo").text("RR");
 
-  } else if (typeAlgorithm == 'Prioridades'){
-      var valueCurrent = $(".optionPlaningThree > input").val();
-      algorithm = valueCurrent;
+  } else if (typeAlgorithm == 'Prioridades'){ 
+      algorithm = typeAlgorithm;
       console.log(algorithm);
       $(".quantumIn").val("");
       $(".quantumIn").hide();
       $(".algoInfo").text("Prioridades");
-
   } else {
-      var valueCurrent = $(".optionPlaningFour > input").val();
-      algorithm = valueCurrent;
+      algorithm = typeAlgorithm;
       console.log(algorithm);
       $(".quantumIn").hide();
       $(".algoInfo").text("Multinivel sin Retro");
-
   }
 
   if (typeAlgorithm == 'Round Robin'){
@@ -386,8 +417,25 @@ $("#optionAlgo").change(function(){
     $('.alertPriod').addClass('hide');
     $(".alertPriod").addClass("disabled");
    }
+   return algorithm;
 });
 //control de la seleccion de algoritmo
+
+//tamaño maximo para el proceso 
+function getMaxProcessSize(typeMemory){
+  if (typeMemory == 'Fija') {
+    var maxPart = memFija[0].size;
+    for (var i = 0; i < memFija.length; i++) {
+      console.log(memFija[i].size);
+      if (memFija[i].size > maxPart) {
+          maxPart = memFija[i].size;
+      }
+    }
+    return maxPart
+  }else {
+    return sizeMemory
+    }
+};
 
 //Formulario
 var raf=0;
@@ -395,33 +443,50 @@ var maxraf=5;
 var cpuList = []
 var esList = []
 //agregar rafagas dinamicas
-$('#rafdynamicId').on('click', '.btn-add-raf', function(e){
+$('#rafdynamicId').off().on('click', '.btn-add-raf', function(e){
 
     e.preventDefault();
+    console.log('raf: ',raf, ' maxraf: ', maxraf);
 
       if(raf < maxraf){
 
-        var controlForm = $('.rafdynamic form:first'),
+        var controlForm = $('#rafdynamicId:first'),
             currentEntry = $(this).parents('.entryRaf:first');
-
-        //rafaga de cpu ingreasda
+            console.log('controlForm1: ',controlForm);
+        //rafaga de cpu ingresada
         var cpu = currentEntry.find('.inputcpu').val();
         var es = currentEntry.find('.inputes').val();
 
         cpu = parseInt(cpu);
         es = parseInt(es);
-
+        
+        if (cpu > 0 && es!=0 ) {
+          $('.alertRaf').removeClass('alert-success');
+          $('.alertRaf').addClass('alert-danger');
+          $(".alertRaf").text("Debes ingresar un valor en E/S mayor a cero.");
+        }else { 
+          if (cpu != 0 && es > 0 ) {
+            $('.alertRaf').removeClass('alert-success');
+            $('.alertRaf').addClass('alert-danger');
+            $(".alertRaf").text("Debes ingresar un valor en CPU mayor a cero.");
+          }
+        };
+         
         if (cpu > 0 && es > 0 ) {
+          $('.alertRaf').removeClass('alert-danger');
+          $('.alertRaf').addClass('alert-success');
+          $(".alertRaf").text("5 es la cantidad máxima de ráfagas que puede agregar.");
           raf = raf + 1;
           //se puede agregar particion
-          console.log(cpu);
-          console.log(es);
+          console.log('raf: ',cpu);
+          console.log('cpu: ',cpu);
+          console.log('es: ',es);
           cpuList.push(cpu);
           esList.push(es);
-          console.log(cpuList, esList)//_------------------------------
-          var controlForm = $('.rafdynamic form:first'),
-              currentEntry = $(this).parents('.entryRaf:first'),
-              newEntry = $(currentEntry.clone()).appendTo(controlForm); console.log( newEntry)
+          console.log('La rafaga ingresada es: ',cpuList, esList)//_------------------------------
+          var controlForm = $('#rafdynamicId:first'),
+              currentEntry = $(this).parents('.entryRaf:first')
+              newEntry = $(currentEntry.clone()).appendTo(controlForm);
 
             newEntry.find('.inputcpu').val('');
             newEntry.find('.inputes').val('');
@@ -442,22 +507,15 @@ $('#rafdynamicId').on('click', '.btn-add-raf', function(e){
 
             controlForm.find('.entryRaf:not(:last) .btn-add-raf')
                 .removeClass('btn-add-raf').addClass('btn-remove-raf')
-                .removeClass('btn-success').addClass('btn-danger')
+                .removeClass('btn-outline-info').addClass('btn-outline-danger')
                 .attr('onClick', 'removeElement('+raf+');')
                 .html('<span class="glyphicon glyphicon-minus deleteInput">Quitar</span>');
-
-        }else {
-          if (cpu > 0) {
-            $(".textoalert").text("Debes ingresar un valor en ES.");
-            $('.alertCustom').addClass('show');
-          }else {
-            $(".textoalert").text("Debes ingresar un valor en CPU.");
-            $('.alertCustom').addClass('show');
-          }
         }
-
+        if(raf == 5){
+          $('.alertRaf').removeClass('alert-success');
+          $('.alertRaf').addClass('alert-danger');
+        }
       }
-
 });
 
 //funcion que remueve las rafagas de los procesos
@@ -465,34 +523,103 @@ function removeElement(element){
   cpuList.splice(element-1, 1);
   esList.splice(element-1, 1);
   $(".divDelete"+element).remove();
+  console.log('La rafaga actualizada es: ',cpuList, esList);
 }
 
-function saveData() {
 
-    $('.alertProcess').addClass('hide');
 
-    var name = $('.name').val();
-    var size = $('.size').val();
-    var arrival = $('.arrival').val();
-    var cpuTimes = cpuList;
-    var ioTimes = esList;
-    var lastCpu = $('.lastCpu').val();
+/* document.querySelector('#botonagregar').addEventListener('click', getData);
 
-      //Para Verificacion del Tamaño de Procesos
-    if (name&&size&&arrival&&(cpuTimes.length > 0)&&(ioTimes.length > 0)&&lastCpu) {
-      var maxTamPocess = getMaxProcessSize(typeMemory)
-      if (size > maxTamPocess) {
-        $(".textoAlertProc").text("El tamaño del proceso no puede ser mayor al tamaño de memoria.");
-        $('.alertProcess').addClass('show');
-      }else {
-        //Si el proceso entra en memoria se Guarda.
-        saveFirebase(name, size, arrival, cpuTimes, ioTimes, lastCpu);
-    }
-  }else {
-    $(".textoAlertProc").text("Debe rellenar todos los campos");
-    $('.alertProcess').addClass('show');
-  }
+function getData(data){
+
+      console.log('dentro de la funcion getData');
+  
+      var xhttp = new XMLHttpRequest();
+  
+      xhttp.open('GET', data, true);
+  
+      xhttp.send();
+  
+      xhttp.onreadystatechange = function(){
+          if (this.readyState==4 && this.status==200){
+              //console.log(this.responseText)
+              var datos = JSON.parse(this.responseText);
+              //console.log(datos);
+              var res = document.querySelector('#tableId')
+              res.innerHTML = ''
+  
+              for ( var item of datos){
+                  //console.log(item);
+                  res.innerHTML += `
+          
+                  <tr>
+                      <th scope="row">${item.id}</th>
+                      <td>${item.name}</td>
+                      <td>${item.size}</td>
+                      <td>${item.arrival}</td>
+                      td>${item.cpuTimes}</td>
+                  </tr>
+                  `
+              }
+          }
+      }
+};
+ */
+/* function deleteData(idData){
+
+  db.collection("process").doc(idData).delete().then(function() {
+      console.log("Document successfully deleted!");
+      getData();
+  }).catch(function(error) {
+      console.error("Error removing document: ", error);
+  });
 }
+
+function getData(){
+  arrayProcess = [];
+  arrayProcGraf = [];
+  lenArrayProcess=0;
+  var tabla = document.getElementById('tableId');
+
+  db.collection("process").orderBy('name').get().then((querySnapshot) => {
+
+      tabla.innerHTML = '';
+      var index = 1;
+
+      querySnapshot.forEach((doc) => {
+        var tiempos = ''
+        for (var i = 0; i < doc.data().cpuTime.length; i++) {
+          tiempos = tiempos + doc.data().cpuTime[i] +'-'+ doc.data().ioTime[i]+'-';
+        }
+
+        tabla.innerHTML += `
+          <tr>
+              <td class="tdTable">${doc.data().name}</td>
+              <td class="tdTable">${doc.data().size}</td>
+              <td class="tdTable">${doc.data().arrivalTime}</td>
+              <td class="tdTable">${tiempos}${doc.data().lastCpuTime}</td>
+              <td class="tdTable"><button class="btn btn-danger" onclick="deleteData('${doc.id}')">Borrar</button></td>
+          </tr>
+          `;
+        index += 1;
+        lenArrayProcess += 1;
+        arrayProcess.push(doc.data());
+        arrayProcGraf.push(doc.data());
+        var ultNom = "P"+(lenArrayProcess+1);
+        $(".nomProc").val(ultNom);
+      });
+  });
+  console.log(arrayProcess)
+};
+ */
+/* function arrayProc(){
+  db.collection("process").orderBy('arrivalTime').get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {arrayProcess.push(doc.data());
+      });
+  });
+
+  return arrayProcess
+} */
 
  //------------------------------------
  /* console.log('activo')

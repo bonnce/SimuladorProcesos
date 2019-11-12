@@ -4,7 +4,7 @@ document.querySelector('#botonagregar').addEventListener('click', traer);
 
 
 function traer() {
-    console.log('dentro de la funcion');
+    console.log('dentro de la funcion traer de test.js');
 
     var xhttp = new XMLHttpRequest();
 

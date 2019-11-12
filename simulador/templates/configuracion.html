@@ -28,8 +28,8 @@
     </div>
     <!--MENU-->
     <div class="container-fluid mt-2" id="#configuracion">
-        <form action="" class="md-form input-group d-flex justify-content-center" role="form" autocomplete="off">
-            <div class="card-deck row mt-5">
+        <form method="POST" action="{% url 'config' %}" class="md-form input-group d-flex justify-content-center" role="form" autocomplete="off">
+            <div class="card-deck row mt-5 input-group-prepend">
             <!--Asignacion de Memoria-->
                 <div class="col-md-6 px-5 d-flex align-items-center flex-column">
                     <!--Card content-->
@@ -113,7 +113,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-footer d-flex justify-content-center">
-                                            <button class="btn btn-default" data-dismiss="modal" type="submit">Confirmar</button>  
+                                            <button class="btn btn-default" data-dismiss="modal" type="button">Confirmar</button>  
                                         </div>
                                     </div>
                                 </div>  
@@ -143,7 +143,7 @@
                                         <option class="optionPlaningThree" value="Prioridades">Prioridades</option>
                                         <option class="optionPlaningFour" value="Multinivel">Multinivel sin Retro</option>         
                                     </select> 
-                                    <div class="col-md-4 text-center fade hide alertRR mt-3 ml-3 px-0" id="btn-parts">
+                                    <div class="col-md-4 text-center fade hide alertRR mt-3 ml-3 px-0 quantumIn" id="btn-parts">
                                         <input type="text" id="materialContactFormName" class="form-control" placeholder="Quantum">
                                     </div>
                                     <p class="col-md-12 text-muted muted-algo p-0 ml-3 mt-2">El algortimo de planificación por defecto es FCFS</p>
@@ -152,22 +152,22 @@
                                 <div class="row mx-auto">
                                     <!--Nombre del Proceso-->
                                     <div class="md-form col-md-6">
-                                            <input type="text" id="materialContactFormName" class="form-control nomProc">
+                                            <input type="text" id="materialContactFormName" class="nameP form-control nomProc">
                                             <label for="materialContactFormName">Nombre del Proceso</label>
                                     </div> 
                                     <!-- E-mail -->
                                     <div class="md-form col-md-6 alertPriod fade hide">
-                                        <input type="text" id="materialContactFormName" class="form-control priodInput">
+                                        <input type="text" id="materialContactFormName" class="priodP form-control priodInput">
                                         <label for="materialContactFormName">Prioridad del Proceso</label>
                                     </div>
                                     <!--Tamaño-->
                                     <div class="md-form col-md-6 my-0">
-                                        <input type="text" id="materialContactFormName" class="form-control sizeInput">
+                                        <input type="text" id="materialContactFormName" class="sizeP form-control sizeInput">
                                         <label for="materialContactFormName">Tamaño</label>
                                     </div>
                                     <!--Tiempo de Arribo-->
                                     <div class="md-form col-md-6 my-0">
-                                            <input type="text" id="materialContactFormName" class="form-control arrivalInput">
+                                            <input type="text" id="materialContactFormName" class="arrivalP form-control arrivalInput">
                                             <label for="materialContactFormName">Tiempo de Arribo</label>
                                         </div>
                                     <div class="md-form px-0 col-md-8 py-1 my-4">
@@ -179,40 +179,35 @@
                                     <!--Generación del ciclo de vida del proceso-->
                                     <div class="modal fade bottom" id="modalLifeProcess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-bottom" role="document">
-                                            <div class="modal-content"  id="modalMemory">
+                                            <div class="modal-content"  id="modalProcess">
                                                 <div class="modal-header text-center">
                                                     <h4 class="modal-title w-100 font-weight-bold">Generación del Ciclo de Vida</h4>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body py-0 mx-3">
-
+                                                <div class="modal-body md-form py-0 mt-3 my-0 mx-3">
+                                                    <div class="alert alert-info alert-dismissible alertRaf" role="alert">
+                                                        <strong class="textoAlertRaf">5 es la cantidad máxima de ráfagas que puede agregar.</strong>
+                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
                                                     <div class="rafdynamic" id="rafdynamicId">
-                                                        <form class="md-form" role="form" autocomplete="off">
+                                                        <form role="form" autocomplete="off">
                                                             <div class="entryRaf input-group-prepend">
                                                                 <!--CPU 0-->
-                                                                <div class="input-group">
-                                                                    <div class="input-group-prepend">
-                                                                        <span class="input-group-text col-md-2 py-0 md-addon textCpu">CPU 0</span>
-                                                                    </div>
-                                                                    <input type="text" class="form-control my-3 p-0 inputcpu" name="cpu[]">
-                                                                </div>
+                                                                <span class="input-group-text textCpu col-md-2 py-0 md-addon">CPU 0</span> 
+                                                                <input class="form-control inputcpu col-md-2 my-3 p-0" name="cpu[]">
                                                                 <!--E/S 0-->
-                                                                <div class="input-group">
-                                                                    <div class="input-group-prepend">
-                                                                        <span class="input-group-text col-md-2 py-0 md-addon textEs">E/S 0</span>
-                                                                    </div>
-                                                                    <input type="text" class="form-control my-3 p-0 inputes" name="es[]">
-                                                                </div>
+                                                                <span class="input-group-text textEs col-md-2 py-0 md-addon">E/S 0</span>
+                                                                <input class="form-control inputes col-md-2 my-3 p-0" name="es[]">
                                                                  <!--Agregar rafagas-->
-                                                                 <div class="input-group">
-                                                                    <span class="input-group-btn-raf col-md-2 p-0 ml-3 mt-4 mb-3">
-                                                                        <button class="btn btn-outline-info z-depth-0 waves-effect btn-sm btn-add-raf" type="button">
-                                                                            <span class="glyphicon glyphicon-plus">Agregar</span>
-                                                                        </button>      
-                                                                    </span> 
-                                                                </div>       
+                                                                <span class="input-group-btn-raf col-md-2 p-0 ml-3 mt-4 mb-3">
+                                                                    <button class="btn btn-outline-info z-depth-0 waves-effect btn-sm btn-add-raf" type="button">
+                                                                        <span class="glyphicon glyphicon-plus">Agregar</span>
+                                                                    </button>      
+                                                                </span>       
                                                             </div>
                                                         </form>
                                                     </div>
