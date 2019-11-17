@@ -21,10 +21,12 @@ def setSimulador(cola_listos, cola_bloqueados, tipo_memoria, algoritmo_planif):
 	simulador.cola_bloqueados = cola_bloqueados
 
 def inicializar_entidades(tipo_memoria, algoritmo_planif):
+
+	particiones = []
 	if tipo_memoria == 'Fija':
-		memoria = MemoriaFija()
+		memoria = MemoriaFija(particiones)
 	else:
-		memoria = MemoriaVariable()
+		memoria = MemoriaVariable(particiones)
 
 	if algoritmo_planif == 'FCFS':
 		simulador = SimuladorFCFS()
@@ -50,6 +52,9 @@ def preparacion(request):
 		context['tipo_memoria'] = tipo_memoria
 		context['algoritmo_memoria'] = algoritmo_memoria
 		context['algoritmo_planif'] = algoritmo_planif
+
+		cola_listos = []
+		cola_bloqueados = []
 
 		setSimulador(cola_listos, cola_bloqueados, tipo_memoria, algoritmo_planif)
 		

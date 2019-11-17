@@ -1,31 +1,34 @@
 from abc import ABC, abstractmethod
+from . import particion
 
 class Memoria(ABC):
 	def __init__(self, particiones):
 		self.particiones = particiones
 
-	def particion_libre_ff(self):
+	def particion_libre(self):
 		for particion in self.particiones:
 			if particion.proceso == None:
 				return self.particiones.index(particion)
 			else:
 				return None
 
-	@abstractmethod
-	def particion_libre(self, proceso):
-		pass
-
-
 	def agregar_proceso(self, proceso):
-		index = self.particion_libre_ff()
+		index = self.particion_libre()
 		if index:
 			self.particiones.insert(index, proceso)
+			return True
 		else:
 			return None
 
-class MemoriaFija(Memoria):
-	def __init__(self):
-		super().__init__()
+	
+
+class MemoriaFijaFirstFit(Memoria):
+	def __init__(self, particiones):
+		super(MemoriaFijaFirstFit, self).__init__(particiones)
+
+class MemoriaFijaWorstFit(Memoria):
+	def __init__(self, particiones):
+		super(MemoriaFijaWorstFit, self).__init__(particiones)
 
 	def particion_libre(self, proceso):
 		frag_interna_global = 0
@@ -39,17 +42,24 @@ class MemoriaFija(Memoria):
 					index = self.particiones.index(particion)
 		return index
 
+class MemoriaVariableFirstFit(Memoria):
+	def __init__(self, particiones):
+		super(MemoriaVariableFirstFit, self).__init__(particiones)
+
 	def agregar_proceso(self, proceso):
 		index = self.particion_libre(proceso)
 		if index:
 			self.particiones.insert(index, proceso)
+			if self.particiones[index].tam > proceso.tam:
+				p = Particion(tam=self.particiones[index].tam - proceso.tam)
+				self.particiones.insert(index+1, p)
+			return True
 		else:
 			return None
-			
 
-class MemoriaVariable(Memoria):
-	def __init__(self):
-		super().__init__()
+class MemoriaVariableBestFit(MemoriaVariableFirstFit):
+	def __init__(self, particiones):
+		super(MemoriaVariable, self).__init__(particiones)
 
 	def particion_libre(self, proceso):
 		frag_interna_global = 0
@@ -63,12 +73,7 @@ class MemoriaVariable(Memoria):
 					index = self.particiones.index(particion)
 		return index
 
-	def agregar_proceso(self, proceso):
-		index = self.particion_libre(proceso)
-		if index:
-			self.particiones.insert(index)
-		else:
-			return None
+	
 
 
 

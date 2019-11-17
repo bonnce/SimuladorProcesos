@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class Dispatcher(ABC):
+class SimuladorBase(ABC):
 	def __init__(self, cola_listos=None, cola_bloqueados=None, memoria_handler=None):
 		self.cola_listos = cola_listos
 		self.cola_bloqueados = cola_bloqueados
@@ -12,7 +12,7 @@ class Dispatcher(ABC):
 	def ordenar_clistos(self):
 		pass
 
-	@abstractmethod
+	
 	def ejecutar_ciclo(self):
 		pass
 
@@ -32,14 +32,14 @@ class Dispatcher(ABC):
 
 
 
-class SimuladorRR(Dispatcher):
+class SimuladorRR(SimuladorBase):
 	def __init__(self):
 		super().__init__()
 
 	def ordenar_clistos(self):
 		pass
 
-class SimuladorFCFS(Dispatcher):
+class SimuladorFCFS(SimuladorBase):
 	def __init__(self):
 		super().__init__()
 
@@ -50,14 +50,14 @@ class SimuladorFCFS(Dispatcher):
 		pass
 
 
-class SimuladorPRIO(Dispatcher):
+class SimuladorPRIO(SimuladorBase):
 	def __init__(self):
 		super().__init__()
 
 	def ordenar_clistos(self):
 		self.cola.sort(key = lambda proceso: proceso.prio)
 
-class SimuladorMLQ(Dispatcher):
+class SimuladorMLQ(SimuladorBase):
 	def __init__(self):
 		super().__init__()
 
