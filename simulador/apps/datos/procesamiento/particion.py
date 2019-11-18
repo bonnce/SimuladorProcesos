@@ -9,3 +9,9 @@ class Particion():
 			return self.tam - self.proceso.tam
 		else:
 			return self.tam
+
+	def particion_vacia(self):
+		if self.proceso == None:
+			return True
+		return False
+
