@@ -12,11 +12,8 @@ class SimuladorBase(ABC):
 	def ordenar_clistos(self):
 		pass
 
-	
+	@abstractmethod
 	def ejecutar_ciclo(self):
-		pass
-
-	def cargar_clistos(self, proceso):
 		pass
 
 	def get_proceso_ejecucion(self):
@@ -25,7 +22,6 @@ class SimuladorBase(ABC):
 	def get_tiempo_espera(self):
 		pass
 
-
 	def cambio_contexto(self):
 		pass
 
@@ -33,15 +29,21 @@ class SimuladorBase(ABC):
 
 
 class SimuladorRR(SimuladorBase):
-	def __init__(self):
-		super().__init__()
+	QUANTUM = 3
+
+	def __init__(self, quantum, cola_listos=None, cola_bloqueados=None, memoria_handler=None):
+		super(SimuladorRR, self).__init__(cola_listos, cola_bloqueados, memoria_handler)
+		SimuladorRR.QUANTUM = quantum
 
 	def ordenar_clistos(self):
 		pass
 
+	def ejecutar_ciclo(self):
+		pass
+
 class SimuladorFCFS(SimuladorBase):
-	def __init__(self):
-		super().__init__()
+	def __init__(self, cola_listos=None, cola_bloqueados=None, memoria_handler=None):
+		super(SimuladorFCFS, self).__init__(cola_listos, cola_bloqueados, memoria_handler)
 
 	def ordenar_clistos(self):
 		pass
@@ -51,15 +53,15 @@ class SimuladorFCFS(SimuladorBase):
 
 
 class SimuladorPRIO(SimuladorBase):
-	def __init__(self):
-		super().__init__()
+	def __init__(self, cola_listos=None, cola_bloqueados=None, memoria_handler=None):
+		super(SimuladorPRIO, self).__init__(cola_listos, cola_bloqueados, memoria_handler)
 
 	def ordenar_clistos(self):
 		self.cola.sort(key = lambda proceso: proceso.prio)
 
 class SimuladorMLQ(SimuladorBase):
-	def __init__(self):
-		super().__init__()
+	def __init__(self, cola_listos=None, cola_bloqueados=None, memoria_handler=None):
+		super(SimuladorMLQ, self).__init__(cola_listos, cola_bloqueados, memoria_handler)
 
 	def ordenar_clistos(self, proceso):
 		pass
