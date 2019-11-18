@@ -88,4 +88,7 @@ class MemoriaHandler():
 				return True
 		return False
 
+	def expulsar_proceso(self, proceso):
+		self.memoria.quitar_proceso(proceso)
+
 
