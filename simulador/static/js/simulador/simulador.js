@@ -1018,7 +1018,6 @@ function getMaxProcessSize(typeMemory){
     }
 }
 
-
 var raf=0;
 var maxraf=5;
 var cpuList = []

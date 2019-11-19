@@ -8,5 +8,4 @@ urlpatterns = [
 	path('ajax/', views.foo, name='foo'),
 	path('print/', views.preparacion, name="print"),
 
-
 ]

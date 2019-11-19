@@ -1,5 +1,5 @@
 
-console.log('activo')
+console.log('activo config.js')
 //Ambiente de variables
 var sizeMemory = 256; // Tamaño de memoria
 var typeMemory = "Variable"; // tipo de Memoria
@@ -16,11 +16,21 @@ var maxpart = 5; //cantidad maxima de particiones fijas
 var memFija = []; // memoria fija
 var tiempo = 0
 var lenArrayProcess = 0
+
 //Preparamos el entorno de trabajo
+$(function () {
+  $("[data-toggle=popover]").popover({
+        html: true
+    });
+})
+
+$(document).tooltip({
+    selector: '.tt'
+});
 
 $(document).ready(function(){
 
-  $("#Memoryinput, .alertRR, .sizeInput, .arrivalInput, .inputcpu, .inputes, .lastCpu").keydown(function(event) {
+  $("#Memoryinput, .alertRR, .priodInput, .sizeInput, .arrivalInput, .lastCpu, .inputcpu, .inputes").keydown(function(event) {
 
   //No permite mas de 11 caracteres Numéricos
   if (event.keyCode != 46 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39) 
@@ -44,10 +54,39 @@ $(document).ready(function(){
 });     
 //Preparamos el entorno de trabajo
 //------------------------------------------------------------------------
+$(".quantumIn").keyup(function(){
+
+  var quanto = parseInt($('.quantumIn').val())
+
+  if (quanto > 0) {
+    generalQuantum = quanto;
+    $(".algoInfo").text("RR - Q:"+quanto);
+  }else {
+    $(".textoAlertProc").text("Debe ingresar un Quantum mayor a cero.");
+    $('.alertProcess').addClass('show');
+  }
+
+ });
+
+ $(".sizeInput").keyup(function(){
+
+  $('.alertProcess').removeClass('show');
+  $('.alertProcess').addClass('hide');
+
+  var tamProc = parseInt($('.sizeInput').val())
+  var maxTamPocess = getMaxProcessSize(typeMemory)
+
+  if (tamProc > maxTamPocess) {
+    $(".textoAlertProc").text("El tamaño del proceso no puede ser mayor al tamaño de la Memoria definido.");
+    $('.alertProcess').addClass('show');
+  }
+ });
 //control de la obtención del tamaño de la memoria
 $("#optionTam").off().change(function(){
     // Capturamos el valor seleccionado del desplegable
   var value = parseInt($("#optionTam").find(':selected').val());
+  $("#optionTam").addClass('mb-4')
+  $(".muted-tam").hide();
 
     if (value == 256){
         sizeMemory = value;
@@ -86,6 +125,8 @@ return sizeMemory, maxpart;
  $("#optionType").change(function(){
 
    var typeMemory = $("#optionType").find(':selected').text();
+    $("#btn-hide").addClass('mb-5')
+    $(".muted-type").hide();
  
    if (typeMemory == 'Fija'){
       $(".fixedPart").show();
@@ -109,12 +150,15 @@ return sizeMemory, maxpart;
       $(".optionFitTwo").show();
       $(".optionFitOne").hide();
    }
+   return typeMemory;
 });
 //control del tipo de memoria
 //--------------------------------
 //control de ajuste de memoria
  $("#optionSet").change(function(){
    var setMemory = $("#optionSet").find(':selected').text();
+    $("#optionSet").addClass('mb-4')
+    $(".muted-set").hide();
 
    if (setMemory == 'Best Fit'){
       var fitMemory = setMemory;
@@ -131,7 +175,7 @@ return sizeMemory, maxpart;
       console.log(fitMemory);
       $(".ajuInfo").text(fitMemory);
    }
-
+return fitMemory;
  });
 
 //--------------------------------------------------------------------------
@@ -154,7 +198,7 @@ $(".inputMemory").keyup(function(){
 });
 
 //agregar particion - generacion de input
-$('#formid').off().on('click', '.btn-add',function(e){
+$('#controlid').off().on('click', '.btn-add',function(e){
   $('.alertPart').removeClass('show');
   $('.alertPart').addClass('hide');
 
@@ -163,9 +207,9 @@ $('#formid').off().on('click', '.btn-add',function(e){
 
   e.preventDefault();
 
-  var controlForm = $('#formid:first'),
+  var controlForm = $('#controlid:first'),
       currentEntry = $(this).parents('.entry:first');
-  
+      console.log('controlform: ',controlForm);
   //Variable que nos indica en cada momento el tamaño disponible
   var tamdisp = sizeMemory
   console.log(tamdisp);
@@ -192,8 +236,7 @@ $('#formid').off().on('click', '.btn-add',function(e){
     } 
     
     if (sizepart <= tamdisp) {
-      console.log('dentro de la funcion de agregar particion')
-      //se puede agregar particion
+      //Se puede agregar una nueva particion
 
       var objPart = {};
       objPart.IdPart = cont;
@@ -203,19 +246,17 @@ $('#formid').off().on('click', '.btn-add',function(e){
       memFija.push(objPart);
       cont = cont + 1;
 
-      var controlForm = $('#formid:first'),
+      var controlForm = $('#controlid:first'),
           currentEntry = $(this).parents('.entry:first');
-          console.log(controlForm,currentEntry);
 
       if (cont < maxpart) {
         var newEntry = $(currentEntry.clone()).appendTo(controlForm);
-        console.log('el tamaño de la particion actual es: ',cont)
+        console.log('el tamaño de la particion actual es: ',tamdisp)
         newEntry.find('input').val('');
 
         newEntry.find('.textPart').text("Partición " + cont)
 
         controlForm.find('.entry:not(:last) .inputMemory')
-          .attr('id', 'btn-quitar')
           .addClass('classDisabled')
           .removeClass('inputMemory')
           .prop("disabled", true);
@@ -245,23 +286,23 @@ $('#formid').off().on('click', '.btn-add',function(e){
       }
 
 console.log(memFija);
+return memFija;
 }); 
 
 //--------------------------------------------------------------------------
 //Borrado de particion
 //EliminamosFisicamente
 function elimPart(partSize){
-console.log('dentro de la funcion elimPart')
   for (var i = 0; i < memFija.length; i++) {
     if (memFija[i].size == partSize){
       memFija[i].size = 0;
     }
   }
+  console.log('Resultado de la funcion partSize',memFija);
 };
 
 //Borrado de particion
-$(document).on('click','.btn-remove', function(){
-  console.log('dentro de la funcion de borrado de particion')
+$('#controlid').on('click','.btn-remove', function(){
 
   var currentEntry = $(this).parents('.entry:first');
   var sizeElim = currentEntry.find('input').val();
@@ -281,7 +322,8 @@ $(document).on('click','.btn-remove', function(){
     $('.alertPart').removeClass('alert-danger');
     $('.alertPart').addClass('alert-success');
     $('.alertPart').addClass('show');
-    
+    console.log('Resultado del borrado de la particion',memFija);
+    return memFija;
 });
 
 function setPart(sizePart){
@@ -290,9 +332,11 @@ function setPart(sizePart){
       memFija[i].size = sizePart;
     };
   }
+  console.log('Resultado de la funcion setPart',memFija);
 };
+
 //Reinput luego de haber borrado una particion
-$(document).on('click','.btn-udp', function(){
+$('#controlid').on('click','.btn-udp', function(){
 console.log('luego de haber borrado la particion')
 
   $('.alertPart').removeClass('show');
@@ -322,42 +366,38 @@ console.log('luego de haber borrado la particion')
   });
 
 //--------------------------------------------------------------------------
-//CONTROL DE AJUSTE DE MEMORIA
+//POLITICA DE PLANIFICACION
 
 //control de la seleccion de algoritmo
 $("#optionAlgo").change(function(){
   var typeAlgorithm = $("#optionAlgo").find(':selected').text();
+  $("#optionAlgo").addClass('mb-5')
+  $(".muted-algo").hide();
 
   if (typeAlgorithm == 'FCFS'){
-    var valueCurrent = $(".optionPlaningOne > input").val();
-    algorithm = valueCurrent;
+    algorithm = typeAlgorithm;
     console.log(algorithm);
     $(".quantumIn").val("");
     $(".quantumIn").hide();
     $(".algoInfo").text("FCFS");
  
   } else if (typeAlgorithm == 'Round Robin'){
-      var valueCurrent = $(".optionPlaningTwo > input").val();
-      algorithm = valueCurrent;
+      algorithm = typeAlgorithm;
       console.log(algorithm);
       $(".quantumIn").show();
       $(".algoInfo").text("RR");
 
-  } else if (typeAlgorithm == 'Prioridades'){
-      var valueCurrent = $(".optionPlaningThree > input").val();
-      algorithm = valueCurrent;
+  } else if (typeAlgorithm == 'Prioridades'){ 
+      algorithm = typeAlgorithm;
       console.log(algorithm);
       $(".quantumIn").val("");
       $(".quantumIn").hide();
       $(".algoInfo").text("Prioridades");
-
   } else {
-      var valueCurrent = $(".optionPlaningFour > input").val();
-      algorithm = valueCurrent;
+      algorithm = typeAlgorithm;
       console.log(algorithm);
       $(".quantumIn").hide();
       $(".algoInfo").text("Multinivel sin Retro");
-
   }
 
   if (typeAlgorithm == 'Round Robin'){
@@ -368,13 +408,218 @@ $("#optionAlgo").change(function(){
    $('.alertRR').addClass('hide');
    $(".alertRR").addClass("disabled");
   }
+
+  if (typeAlgorithm == 'Prioridades'){
+    $('.alertPriod').removeClass('hide');
+    $('.alertPriod').addClass('show');
+   } else{
+    $('.alertPriod').removeClass('show');
+    $('.alertPriod').addClass('hide');
+    $(".alertPriod").addClass("disabled");
+   }
+   return algorithm;
 });
 //control de la seleccion de algoritmo
 
+//tamaño maximo para el proceso 
+function getMaxProcessSize(typeMemory){
+  if (typeMemory == 'Fija') {
+    var maxPart = memFija[0].size;
+    for (var i = 0; i < memFija.length; i++) {
+      console.log(memFija[i].size);
+      if (memFija[i].size > maxPart) {
+          maxPart = memFija[i].size;
+      }
+    }
+    return maxPart
+  }else {
+    return sizeMemory
+    }
+};
+
 //Formulario
-//Editar Nombre
-$(document).on('click','.editarNombre',function(){
-  $('.nomProc').prop("disabled", false)});
+var raf=0;
+var maxraf=5;
+var cpuList = []
+var esList = []
+//agregar rafagas dinamicas
+$('#rafdynamicId').off().on('click', '.btn-add-raf', function(e){
+
+    e.preventDefault();
+    console.log('raf: ',raf, ' maxraf: ', maxraf);
+
+      if(raf < maxraf){
+
+        var controlForm = $('#rafdynamicId:first'),
+            currentEntry = $(this).parents('.entryRaf:first');
+            console.log('controlForm1: ',controlForm);
+        //rafaga de cpu ingresada
+        var cpu = currentEntry.find('.inputcpu').val();
+        var es = currentEntry.find('.inputes').val();
+
+        cpu = parseInt(cpu);
+        es = parseInt(es);
+        
+        if (cpu > 0 && es!=0 ) {
+          $('.alertRaf').removeClass('alert-success');
+          $('.alertRaf').addClass('alert-danger');
+          $(".alertRaf").text("Debes ingresar un valor en E/S mayor a cero.");
+        }else { 
+          if (cpu != 0 && es > 0 ) {
+            $('.alertRaf').removeClass('alert-success');
+            $('.alertRaf').addClass('alert-danger');
+            $(".alertRaf").text("Debes ingresar un valor en CPU mayor a cero.");
+          }
+        };
+         
+        if (cpu > 0 && es > 0 ) {
+          $('.alertRaf').removeClass('alert-danger');
+          $('.alertRaf').addClass('alert-success');
+          $(".alertRaf").text("5 es la cantidad máxima de ráfagas que puede agregar.");
+          raf = raf + 1;
+          //se puede agregar particion
+          console.log('raf: ',cpu);
+          console.log('cpu: ',cpu);
+          console.log('es: ',es);
+          cpuList.push(cpu);
+          esList.push(es);
+          console.log('La rafaga ingresada es: ',cpuList, esList)//_------------------------------
+          var controlForm = $('#rafdynamicId:first'),
+              currentEntry = $(this).parents('.entryRaf:first')
+              newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+            newEntry.find('.inputcpu').val('');
+            newEntry.find('.inputes').val('');
+
+            newEntry.find('.textCpu').text("CPU " + raf);
+            newEntry.find('.textEs').text("E/S " + raf);
+            $(this).parents('.entryRaf:first').addClass('divDelete'+raf);
+
+            controlForm.find('.entryRaf:not(:last) .inputcpu')
+              .addClass('classDisabled')
+              .removeClass('inputcpu')
+              .prop("disabled", true);
+
+            controlForm.find('.entryRaf:not(:last) .inputes')
+                .addClass('classDisabled')
+                .removeClass('inputes')
+                .prop("disabled", true);
+
+            controlForm.find('.entryRaf:not(:last) .btn-add-raf')
+                .removeClass('btn-add-raf').addClass('btn-remove-raf')
+                .removeClass('btn-outline-info').addClass('btn-outline-danger')
+                .attr('onClick', 'removeElement('+raf+');')
+                .html('<span class="glyphicon glyphicon-minus deleteInput">Quitar</span>');
+        }
+        if(raf == 5){
+          $('.alertRaf').removeClass('alert-success');
+          $('.alertRaf').addClass('alert-danger');
+        }
+      }
+});
+
+//funcion que remueve las rafagas de los procesos
+function removeElement(element){
+  cpuList.splice(element-1, 1);
+  esList.splice(element-1, 1);
+  $(".divDelete"+element).remove();
+  console.log('La rafaga actualizada es: ',cpuList, esList);
+}
+
+
+
+/* document.querySelector('#botonagregar').addEventListener('click', getData);
+
+function getData(data){
+
+      console.log('dentro de la funcion getData');
+  
+      var xhttp = new XMLHttpRequest();
+  
+      xhttp.open('GET', data, true);
+  
+      xhttp.send();
+  
+      xhttp.onreadystatechange = function(){
+          if (this.readyState==4 && this.status==200){
+              //console.log(this.responseText)
+              var datos = JSON.parse(this.responseText);
+              //console.log(datos);
+              var res = document.querySelector('#tableId')
+              res.innerHTML = ''
+  
+              for ( var item of datos){
+                  //console.log(item);
+                  res.innerHTML += `
+          
+                  <tr>
+                      <th scope="row">${item.id}</th>
+                      <td>${item.name}</td>
+                      <td>${item.size}</td>
+                      <td>${item.arrival}</td>
+                      td>${item.cpuTimes}</td>
+                  </tr>
+                  `
+              }
+          }
+      }
+};
+ */
+/* function deleteData(idData){
+
+  db.collection("process").doc(idData).delete().then(function() {
+      console.log("Document successfully deleted!");
+      getData();
+  }).catch(function(error) {
+      console.error("Error removing document: ", error);
+  });
+}
+
+function getData(){
+  arrayProcess = [];
+  arrayProcGraf = [];
+  lenArrayProcess=0;
+  var tabla = document.getElementById('tableId');
+
+  db.collection("process").orderBy('name').get().then((querySnapshot) => {
+
+      tabla.innerHTML = '';
+      var index = 1;
+
+      querySnapshot.forEach((doc) => {
+        var tiempos = ''
+        for (var i = 0; i < doc.data().cpuTime.length; i++) {
+          tiempos = tiempos + doc.data().cpuTime[i] +'-'+ doc.data().ioTime[i]+'-';
+        }
+
+        tabla.innerHTML += `
+          <tr>
+              <td class="tdTable">${doc.data().name}</td>
+              <td class="tdTable">${doc.data().size}</td>
+              <td class="tdTable">${doc.data().arrivalTime}</td>
+              <td class="tdTable">${tiempos}${doc.data().lastCpuTime}</td>
+              <td class="tdTable"><button class="btn btn-danger" onclick="deleteData('${doc.id}')">Borrar</button></td>
+          </tr>
+          `;
+        index += 1;
+        lenArrayProcess += 1;
+        arrayProcess.push(doc.data());
+        arrayProcGraf.push(doc.data());
+        var ultNom = "P"+(lenArrayProcess+1);
+        $(".nomProc").val(ultNom);
+      });
+  });
+  console.log(arrayProcess)
+};
+ */
+/* function arrayProc(){
+  db.collection("process").orderBy('arrivalTime').get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {arrayProcess.push(doc.data());
+      });
+  });
+
+  return arrayProcess
+} */
 
  //------------------------------------
  /* console.log('activo')

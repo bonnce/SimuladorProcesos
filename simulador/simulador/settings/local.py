@@ -7,9 +7,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'simulador',
-        'USER': 'snd',
-        'PASSWORD': '1234',
+        'USER': 'develop',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '5432',
     }
 }
